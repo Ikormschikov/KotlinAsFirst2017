@@ -263,12 +263,12 @@ fun hasDifferentDigits(n: Int): Boolean  {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
     fun squareSequenceDigit(n: Int): Int  {
-    var a = mutableListOf(0) // создаю список из послеовательности квадратов
+    var a = mutableListOf<Long>(0) // создаю список из послеовательности квадратов
         var i = 0
     while (a.size-1 < n) {
         i++
-          val digits = mutableListOf<Int>() // список для квадратов
-             var sqrI = sqr(i.toDouble()).toInt()
+          val digits = mutableListOf<Long>() // список для квадратов
+             var sqrI:Long = sqr(i.toDouble()).toLong()
         while (sqrI > 0)
         {
             digits.add(0, sqrI % 10) // раскладываю квадрат на элементы
@@ -276,7 +276,7 @@ fun hasDifferentDigits(n: Int): Boolean  {
         }
         a = (a + digits).toMutableList()
     }
-    return a[n]
+    return a[n].toInt()
 }
 
 
@@ -288,29 +288,30 @@ fun hasDifferentDigits(n: Int): Boolean  {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-        var a = mutableListOf(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
-            var c = mutableListOf<Int>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
-                var i = 2
+        var a = mutableListOf<Long>(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
+            var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
+                var i:Long = 2
+    var v:Long = n.toLong()
         if (n == 1 || n == 2) return 1
         while (a.size - 1 < n) {
             i++
-            val digits = mutableListOf<Int>()
-                var b = a[i - 1] + a[i - 2]
+            val digits = mutableListOf<Long>()
+                var b:Long = a[(i - 1).toInt()] + a[(i - 2).toInt()]
                     while (b > 0) {
                 digits.add(0, b * 1)
                     b -= b
             }
-            a = (a + digits).toMutableList()
+            a = (a + digits).toMutableList<Long>()
         }
             for ( element in a) {
-                val digits2 = mutableListOf<Int>()
+                val digits2 = mutableListOf<Long>()
                     var element1 = element
                         while ( element1 > 0 ){
                     digits2.add(0, element1 % 10)
                          element1 /= 10
                 }
-                c =(c + digits2).toMutableList()
+                c =(c + digits2).toMutableList<Long>()
             }
-            return c[n]
+            return c[n].toInt()
         }
 
