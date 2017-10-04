@@ -79,7 +79,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
         (kingX != rookX1) && (kingY != rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 0
                 (kingX == rookX1) || (kingY == rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 1
         (kingX != rookX1) && (kingY != rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 2
-                (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
+                 (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
         else -> 4
     }
 }
