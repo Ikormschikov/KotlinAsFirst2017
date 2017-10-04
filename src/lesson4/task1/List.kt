@@ -1,8 +1,8 @@
-@file:Suppress("UNUSED_PARAMETER")
+ @file:Suppress("UNUSED_PARAMETER")
 package lesson4.task1
 
 import lesson1.task1.discriminant
-
+import java.lang.Math.*
 /**
  * Пример
  *
@@ -106,14 +106,30 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var a:Double = 0.0
+        if(v.isEmpty()) return 0.0
+    for (element in v) {
+            a += element * element
+    }
+    return sqrt(a)
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    var a: Double = 0.0
+        val b: Double = list.size.toDouble()
+    if (list.isEmpty()) return 0.0
+        for (element in list) {
+             a += element
+    }
+    return a / b
+}
+
 
 /**
  * Средняя
@@ -123,7 +139,15 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val a:Double = list.sum() / list.size
+        if(list.isEmpty()) return list
+            for (i in 0 until list.size ){
+        val element = list[i]
+            list[i] = element - a
+    }
+    return list
+}
 
 /**
  * Средняя
