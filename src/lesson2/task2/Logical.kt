@@ -17,7 +17,12 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    return when {
+         (number % 10 + number % 100 / 10 == number % 1000 / 100 + number % 10000 / 1000) -> true
+        else -> false
+    }
+}
 
 /**
  * Простая
@@ -26,7 +31,19 @@ fun isNumberHappy(number: Int): Boolean = TODO()
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+    val a:Boolean = (x2 > x1)
+        val b:Boolean = (y2 == y1)
+             val c:Boolean = (x1 == y2)
+                val d:Boolean = (y1 == x2)
+    return when {
+            a && b -> true
+                c && d -> true
+        else -> false
+    }
+}
+
+
 
 /**
  * Средняя
@@ -36,7 +53,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean = TODO()
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val a:Boolean = (x2 == x1)
+        val b:Boolean = (y2 <= y1)
+            val c:Boolean = (r2 >= r1)
+    return when {
+        a && b && c -> true
+            else -> false
+    }
+}
 
 /**
  * Средняя
@@ -47,4 +72,21 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+val r1 =  r >= a
+        val r2 = r >= b
+            val r3 = r >= c
+             val s1 = s >=  a
+                val s2 = s >= b
+                    val s3 = s >= c
+    return when {
+        r1 && s2 || r2 && s1 -> true
+            r3 && s2 || r2 && s3 -> true
+                r1 && s3 || r3 && s1 -> true
+        else -> false
+    }
+}
+
+
+
+
