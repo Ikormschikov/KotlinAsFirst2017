@@ -45,7 +45,7 @@ fun ageDescription(age: Int): String {
                     (age / 100 == 1) && (age /10 == 11) && (age % 10 == 1) || (age % 10 == 9) || (age % 10 == 4) -> b
             age / 100 == 1 && age % 10 == 2 || age % 10 == 3 || age % 10 == 4  -> c
                 age == 1 -> a
-            else -> false.toString()
+                else -> false.toString()
 
         }
 }
@@ -79,7 +79,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
         (kingX != rookX1) && (kingY != rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 0
                 (kingX == rookX1) || (kingY == rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 1
         (kingX != rookX1) && (kingY != rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 2
-            (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
+                (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
         else -> 4
     }
 }
@@ -106,7 +106,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
             (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  !=  Math.abs(bishopY - kingY) -> b
         (kingX != rookX) && (kingY != rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> c
             (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> d
-        else -> 4
+                else -> 4
     }
 }
 
@@ -122,7 +122,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     return when {
          b * b + c * c == a * a -> 1
              b == c || b == a || a == c -> 0
-                 c * c > a * a + b * b ->2
+                    c * c > a * a + b * b ->2
         else -> -1
 
     }
@@ -147,7 +147,7 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
                 (e > f && h > g) -> f - h
                     (f > e && h > g && e > h) -> e - h
                         (e > f && g > h && f > g) -> f - g
-         else -> -1
+            else -> -1
     }
 }
 
