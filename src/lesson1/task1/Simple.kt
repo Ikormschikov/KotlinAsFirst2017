@@ -68,7 +68,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
     val a:Int = sagenes * 48
     val b:Int = arshins * 16
     val c:Int = vershoks
-    return (a + b +c ) * 4.445 /100
+    return (a + b +c) * 4.445 / 100
 }
 
 /**
@@ -137,7 +137,7 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  */
 fun numberRevert(number: Int): Int {
     val firstNumeral:Int = number % 10 * 100
-    val secondNumeral:Int =  number % 100 / 10 * 10
+    val secondNumeral:Int = number % 100 / 10 * 10
     val thirdNumeral:Int = number % 1000 / 100
     return firstNumeral + secondNumeral + thirdNumeral
 }
