@@ -89,7 +89,6 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
     return sqrt(sqr(x1 - x2) + sqr(y1 - y2))
-
 }
 
 /**
@@ -110,8 +109,8 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    val a:Int = (hoursArrive  * 60 + minutesArrive)
-    val b:Int = (hoursDepart * 60 + minutesDepart)
+    val a:Int = hoursArrive  * 60 + minutesArrive
+    val b:Int = hoursDepart * 60 + minutesDepart
     return a - b
 }
 
@@ -123,10 +122,9 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val firstYear:Double = initial * (1 + percent / 100.0)
-    val secondYear:Double = firstYear * (1 + percent / 100.0)
-    val thirdYear:Double = secondYear * (1 + percent / 100.0)
-    return thirdYear
+    val percent1:Double = 1 + percent / 100.0
+    val result = pow(percent1.toDouble(),3.0) * initial
+    return result
 }
 
 /**

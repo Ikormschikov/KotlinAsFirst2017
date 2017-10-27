@@ -2,6 +2,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
+import  java.lang.Math.*
 
 /**
  * Пример
@@ -34,21 +36,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    val a:String = "$age год"
-        val b:String = "$age лет"
-    val c:String = "$age года"
-        return when {
-        //  не понимаю можно ли расписать код так, чтобы после == можно было расписать интервал от 0 до 5(включая их)
-            age / 100 != 1  && age % 10 == 2 || age % 10 == 3 || age % 10 == 4 || age % 10 == 5  && age / 10 == 1 -> b
-                 age % 10 == 1 && age / 100 != 1 -> a
-            age % 10 == 0 or 5 or 6 or 7 or 8 or 9 && age / 100 != 1 -> b
-                    (age / 100 == 1) && (age /10 == 11) && (age % 10 == 1) || (age % 10 == 9) || (age % 10 == 4) -> b
-            age / 100 == 1 && age % 10 == 2 || age % 10 == 3 || age % 10 == 4  -> c
-                age == 1 -> a
-                else -> false.toString()
-
-        }
+    var years1 = "$age года"
+    var years2 = "$age лет"
+    var years3 = "$age год"
+    return when {
+        (age % 10 == 1) && (age % 100 / 10 != 1) -> years3
+        (age % 10 in  2.. 4) && (age % 100 / 10 != 1) -> years1
+        else -> years2
 }
+}
+
 
 /**
  * Простая
@@ -76,11 +73,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
     return when {
-        (kingX != rookX1) && (kingY != rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 0
-                (kingX == rookX1) || (kingY == rookY1) && (kingX != rookX2) && (kingY != rookY2) -> 1
-        (kingX != rookX1) && (kingY != rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 2
-                (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
-        else -> 4
+        (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
+        (kingX == rookX1) || (kingY == rookY1) -> 1
+        (kingX == rookX2) || (kingY == rookY2) -> 2
+        else -> 0
     }
 }
 
@@ -97,16 +93,11 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val a:Int = 0
-        val b:Int = 1
-    val c:Int = 2
-        val d:Int = 3
     return when {
-        (kingX != rookX) && (kingY != rookY) && Math.abs(bishopX -  kingX)  !=  Math.abs(bishopY - kingY) -> a
-            (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  !=  Math.abs(bishopY - kingY) -> b
-        (kingX != rookX) && (kingY != rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> c
-            (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> d
-                else -> 4
+        (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> 3
+        (kingX == rookX) || (kingY == rookY) -> 1
+        Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> 2
+        else -> 0
     }
 }
 
@@ -119,13 +110,23 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return when {
-         b * b + c * c == a * a -> 1
-             b == c || b == a || a == c -> 0
-                    c * c > a * a + b * b ->2
-        else -> -1
-
+  val list = listOf(a,b,c).sorted() // создаем список чисел по возрастанию
+    if (a + b <= c || a + c <= b || b + c <= a) {
+        return - 1
     }
+    for (i in list) {
+        val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1]) // находим угол по теореме косинусов
+        if (angle in - 1.0 .. - 0.01) { // проверяем по таблице Брадиса
+            return 2
+        }
+        if (angle in 0.01 .. 0.99) {
+            return 0
+        }
+        if (angle == 0.0) {
+            return 1
+        }
+    }
+    return 4
 }
 
 /**
@@ -138,16 +139,21 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     var e:Int = Math.max(a,b)
-     var f:Int = Math.max(c,d)
-        var g:Int = Math.min(a,b)
-            var h:Int = Math.min(c,d)
+    var f:Int = Math.max(c,d)
+    var g:Int = Math.min(a,b)
+    var h:Int = Math.min(c,d)
     return when {
-        e == h || f == g -> 0
-            (f > e && g > h) -> e - g
-                (e > f && h > g) -> f - h
-                    (f > e && h > g && e > h) -> e - h
-                        (e > f && g > h && f > g) -> f - g
-            else -> -1
+        b < c || d < a -> -1
+        h > e || g > f -> 0
+        h > g && h < e && e < f -> e - h
+        g > h && g < f && f < e -> f - g
+        f < e && f > g && h > g -> f - h
+        e < f && e > h && g > h -> e - g
+        g == h && e < f -> e - g
+        g == h && f < e -> f - h
+        g < h && e == f -> h - g
+        h < g && e == f -> g - h
+        else -> 0
     }
 }
 

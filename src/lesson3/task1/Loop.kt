@@ -65,9 +65,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int) :Int {
     var count: Int = 0
-     val a: Int = 10
-        var b: Int = n
-        if ( b == 0) return count + 1
+    val a: Int = 10
+    var b: Int = n
+    if ( b == 0) return count + 1
     while (b > 0) {
         if (b / a != 0 || b / a == 1 || b / a == 0) {
             count++
@@ -93,13 +93,13 @@ fun fib(n: Int): Int = if (n > 2) fib(n - 1) + fib(n - 2) else 1
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var i1: Int = Math.max(m, n)
-     var i2: Int = Math.min(m, n)
-        var result: Int = 0
+    var i1: Int = Math.max(m,n)
+    var i2: Int = Math.min(m,n)
+    var result: Int = 0
     for (b in i1..i1 * i2) {
         if (b % i1 == 0 && b % i2 == 0) {
             result = b
-                return result
+            return result
         }
     }
     return result
@@ -113,10 +113,10 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var result: Int = 0
-        for (i in 2..n) {
-            if (n % i == 0) {
+    for (i in 2..n) {
+        if (n % i == 0) {
             result = i
-                return result
+            return result
         }
     }
     return result
@@ -128,9 +128,9 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var result: Int = 0
-         for (i in 1..n - 1) {
-                if (n % i == 0) {
-                result = i
+    for (i in 1..n - 1) {
+         if (n % i == 0) {
+            result = i
 
         }
     }
@@ -146,8 +146,8 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int):Boolean {
     var a: Int = Math.min(m, n)
-        for (i in 2..a) {
-            if ( m % i == 0 && n % i == 0) {
+    for (i in 2..a) {
+         if ( m % i == 0 && n % i == 0) {
             return false
         }
     }
@@ -167,11 +167,11 @@ fun isCoPrime(m: Int, n: Int):Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var a: Int = min(m, n)
-        var b: Int = max(m, n)
+    var b: Int = max(m, n)
     for (i in a..b) {
         var c: Int = i
-for (j in 1 .. c){
-    if ( j * j != c)
+    for (j in 1 .. c){
+        if ( j * j != c)
         return false
         }
     }
@@ -202,12 +202,12 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int   {
-var a : Int = 0
+    var a : Int = 0
     var c:Int = n
     while ( c > 0) {
         var b:Int = c % 10
          a = b + a * 10
-             c /= 10
+         c /= 10
     }
      return a
 }
@@ -221,11 +221,11 @@ var a : Int = 0
  */
 fun isPalindrome(n: Int): Boolean {
     var a:Int = 0
-        var c:Int = n
+    var c:Int = n
     while ( c > 0) {
         var b:Int = c % 10
             a = b + a * 10
-                 c /= 10
+            c /= 10
     }
     if (a == n) return true
     else return false
@@ -239,17 +239,16 @@ fun isPalindrome(n: Int): Boolean {
  */
 fun hasDifferentDigits(n: Int): Boolean  {
    var b:Int = n
-    var a:Int = b % 10
-        var count:Int = 0
+   var a:Int = b % 10
+   var count:Int = 0
    while (b > 0){
         if (a != b % 10) {
         count++
    }
-       b /= 10
-     if (count >= 1) return true
-
+        b /= 10
+        if (count >= 1) return true
    }
-  return false
+    return false
  }
 
 
@@ -264,11 +263,11 @@ fun hasDifferentDigits(n: Int): Boolean  {
  */
     fun squareSequenceDigit(n: Int): Int  {
     var a = mutableListOf<Long>(0) // создаю список из послеовательности квадратов
-        var i = 0
+    var i = 0
     while (a.size-1 < n) {
         i++
-          val digits = mutableListOf<Long>() // список для квадратов
-             var sqrI:Long = sqr(i.toDouble()).toLong()
+        val digits = mutableListOf<Long>() // список для квадратов
+        var sqrI:Long = sqr(i.toDouble()).toLong()
         while (sqrI > 0)
         {
             digits.add(0, sqrI % 10) // раскладываю квадрат на элементы
@@ -288,15 +287,15 @@ fun hasDifferentDigits(n: Int): Boolean  {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-        var a = mutableListOf<Long>(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
-            var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
-                var i:Long = 2
+    var a = mutableListOf<Long>(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
+    var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
+    var i:Long = 2
     var v:Long = n.toLong()
         if (n == 1 || n == 2) return 1
-        while (a.size - 1 < n) {
+        while (a.size - 1 < v) {
             i++
             val digits = mutableListOf<Long>()
-                var b:Long = a[(i - 1).toInt()] + a[(i - 2).toInt()]
+            var b:Long = a[(i - 1).toInt()] + a[(i - 2).toInt()]
                     while (b > 0) {
                 digits.add(0, b * 1)
                     b -= b
@@ -305,13 +304,13 @@ fun fibSequenceDigit(n: Int): Int {
         }
             for ( element in a) {
                 val digits2 = mutableListOf<Long>()
-                    var element1 = element
-                        while ( element1 > 0 ){
-                    digits2.add(0, element1 % 10)
-                         element1 /= 10
-                }
-                c =(c + digits2).toMutableList<Long>()
+                var element1:Long = element
+                        while ( element1 > 0 ) {
+                            digits2.add(0, element1 % 10)
+                            element1 /= 10
+                        }
+                            c = (c + digits2).toMutableList<Long>()
             }
-            return c[n].toInt()
+            return c[v.toInt()].toInt()
         }
 

@@ -2,6 +2,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Пример
@@ -18,8 +19,12 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean {
+    val firstNumber = number / 1000
+    val secondNumber = number % 1000 / 100
+    val thirdnumber = number % 100 / 10
+    val lastNumber = number % 10
     return when {
-        (number % 10 + number % 100 / 10 == number % 1000 / 100 + number % 10000 / 1000) -> true
+        firstNumber + secondNumber == thirdnumber + lastNumber  -> true
         else -> false
     }
 }
@@ -32,14 +37,15 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val a:Boolean = (x2 > x1)
-        val b:Boolean = (y2 == y1)
-             val c:Boolean = (x1 == y2)
-                val d:Boolean = (y1 == x2)
+    val a:Boolean = x1 == x2
+    val b:Boolean = y1 == y2
+    val c:Int = x1 - x2
+    val d:Int = y1 - y2
     return when {
-             a && b -> true
-                    c && d -> true
-        else -> false
+         a -> true
+         b -> true
+         abs(c) == abs(d) -> true
+         else -> false
     }
 }
 
@@ -54,14 +60,16 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
-    val a:Boolean = (x2 == x1)
-        val b:Boolean = (y2 <= y1)
-            val c:Boolean = (r2 >= r1)
-    return when {
-        a && b && c -> true
-        else -> false
+    val distance = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+    val difference = abs(r2 - r1)
+    if (r1 > r2) return false
+        return when {
+            distance <= difference -> true
+            else -> false
+        }
     }
-}
+
+
 
 /**
  * Средняя
@@ -73,16 +81,16 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-val r1 =  r >= a
-        val r2 = r >= b
-            val r3 = r >= c
-             val s1 = s >=  a
-                val s2 = s >= b
-                    val s3 = s >= c
+    val r1 =  r >= a
+    val r2 = r >= b
+    val r3 = r >= c
+    val s1 = s >=  a
+    val s2 = s >= b
+    val s3 = s >= c
     return when {
         r1 && s2 || r2 && s1 -> true
-            r3 && s2 || r2 && s3 -> true
-                r1 && s3 || r3 && s1 -> true
+        r3 && s2 || r2 && s3 -> true
+        r1 && s3 || r3 && s1 -> true
         else -> false
     }
 }
