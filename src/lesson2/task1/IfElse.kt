@@ -36,14 +36,11 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    var years1 = "$age года"
-    var years2 = "$age лет"
-    var years3 = "$age год"
     return when {
-        (age % 10 == 1) && (age % 100 / 10 != 1) -> years3
-        (age % 10 in  2.. 4) && (age % 100 / 10 != 1) -> years1
-        else -> years2
-}
+        (age % 10 == 1) && (age % 100 / 10 != 1) -> "$age год"
+        (age % 10 in  2.. 4) && (age % 100 / 10 != 1) -> "$age года"
+        else -> "$age лет"
+    }
 }
 
 
@@ -72,10 +69,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
+    val firstRook = (kingX == rookX1) || (kingY == rookY1)
+    val secondRook = (kingX == rookX2) || (kingY == rookY2)
     return when {
-        (kingX == rookX1) || (kingY == rookY1) && (kingX == rookX2) || (kingY == rookY2) -> 3
-        (kingX == rookX1) || (kingY == rookY1) -> 1
-        (kingX == rookX2) || (kingY == rookY2) -> 2
+        firstRook && secondRook -> 3
+        firstRook -> 1
+        secondRook -> 2
         else -> 0
     }
 }
@@ -93,10 +92,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
+    val rook = (kingX == rookX) || (kingY == rookY)
+    val bishop = Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY)
     return when {
-        (kingX == rookX) || (kingY == rookY) && Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> 3
-        (kingX == rookX) || (kingY == rookY) -> 1
-        Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY) -> 2
+        rook && bishop -> 3
+        rook -> 1
+        bishop -> 2
         else -> 0
     }
 }
@@ -116,10 +117,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     }
     for (i in list) {
         val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1]) // находим угол по теореме косинусов
-        if (angle in - 1.0 .. - 0.01) { // проверяем по таблице Брадиса
+        if (angle in - 1.0 .. - 0.0000000001) { // проверяем по таблице Брадиса
             return 2
         }
-        if (angle in 0.01 .. 0.99) {
+        if (angle in 0.0000000001 .. 0.99) {
             return 0
         }
         if (angle == 0.0) {
@@ -138,22 +139,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    var e:Int = Math.max(a,b)
-    var f:Int = Math.max(c,d)
-    var g:Int = Math.min(a,b)
-    var h:Int = Math.min(c,d)
+    var e = Math.max(a,b)
+    var f = Math.max(c,d)
+    var g = Math.min(a,b)
+    var h = Math.min(c,d)
     return when {
-        b < c || d < a -> -1
-        h > e || g > f -> 0
-        h > g && h < e && e < f -> e - h
-        g > h && g < f && f < e -> f - g
-        f < e && f > g && h > g -> f - h
-        e < f && e > h && g > h -> e - g
-        g == h && e < f -> e - g
-        g == h && f < e -> f - h
-        g < h && e == f -> h - g
-        h < g && e == f -> g - h
-        else -> 0
+        e in h .. f && g in h .. f -> e - g
+        h in g .. e && f in g .. e -> f - h
+        g in h .. f && e >= f -> f - g
+        h in g .. e && f >= e -> e - h
+        f in g .. e -> e - g
+        else -> -1
     }
 }
 

@@ -87,9 +87,8 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    return sqrt(sqr(x1 - x2) + sqr(y1 - y2))
-}
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+
 
 /**
  * Простая
@@ -97,9 +96,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int {
-    return (number % 1000) / 100
-}
+fun thirdDigit(number: Int): Int = (number % 1000) / 100
 
 /**
  * Простая
@@ -109,8 +106,8 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    val a:Int = hoursArrive  * 60 + minutesArrive
-    val b:Int = hoursDepart * 60 + minutesDepart
+    val a = hoursArrive * 60 + minutesArrive
+    val b = hoursDepart * 60 + minutesDepart
     return a - b
 }
 
@@ -122,9 +119,8 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val percent1:Double = 1 + percent / 100.0
-    val result = pow(percent1.toDouble(),3.0) * initial
-    return result
+    val percent1 = 1 + percent / 100.0
+    return pow(percent1.toDouble(),3.0) * initial
 }
 
 /**
@@ -134,8 +130,8 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  *Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    val firstNumeral:Int = number % 10 * 100
-    val secondNumeral:Int = number % 100 / 10 * 10
-    val thirdNumeral:Int = number % 1000 / 100
+    val firstNumeral= number % 10 * 100
+    val secondNumeral= number % 100 / 10 * 10
+    val thirdNumeral = number % 1000 / 100
     return firstNumeral + secondNumeral + thirdNumeral
 }
