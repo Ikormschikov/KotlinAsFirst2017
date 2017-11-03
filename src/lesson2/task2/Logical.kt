@@ -23,10 +23,7 @@ fun isNumberHappy(number: Int): Boolean {
     val secondNumber = number % 1000 / 100
     val thirdnumber = number % 100 / 10
     val lastNumber = number % 10
-    return when {
-        firstNumber + secondNumber == thirdnumber + lastNumber  -> true
-        else -> false
-    }
+    return if (firstNumber + secondNumber == thirdnumber + lastNumber) true else return false
 }
 
 /**
@@ -37,16 +34,12 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val a:Boolean = x1 == x2
-    val b:Boolean = y1 == y2
-    val c:Int = x1 - x2
-    val d:Int = y1 - y2
-    return when {
-         a -> true
-         b -> true
-         abs(c) == abs(d) -> true
-         else -> false
-    }
+    val theFirstCondition = x1 == x2
+    val theSecondCondition = y1 == y2
+    val theFirstSubtraction = x1 - x2
+    val theSecondSubtraction = y1 - y2
+    if (theFirstCondition || theSecondCondition || abs(theFirstSubtraction) == abs(theSecondSubtraction)) return true
+    else return false
 }
 
 
@@ -63,10 +56,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
     val distance = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
     val difference = abs(r2 - r1)
     if (r1 > r2) return false
-        return when {
-            distance <= difference -> true
-            else -> false
-        }
+    if (distance <= difference) return true else return false
     }
 
 
@@ -81,7 +71,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val r1 =  r >= a
+    val r1 = r >= a
     val r2 = r >= b
     val r3 = r >= c
     val s1 = s >=  a
