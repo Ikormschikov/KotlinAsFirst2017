@@ -273,7 +273,7 @@ fun hasDifferentDigits(n: Int): Boolean  {
             sqrI /= 10
         }
         digits.reverse()
-        a.addAll(digits) //(a + digits).toMutableList()
+        a.addAll(digits)
     }
     return a[n].toInt()
 }
