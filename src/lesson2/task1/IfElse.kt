@@ -114,10 +114,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a + b <= c || a + c <= b || b + c <= a) {
         return -1
     }
-        if (angle in -1.0 .. -0.0000000001) { // проверяем по таблице Брадиса
+        if (angle < 0) { // проверяем по таблице Брадиса
             return 2
         }
-        if (angle in 0.0000000001 .. 0.99) {
+        if (angle > 0) {
             return 0
         }
         if (angle == 0.0) {

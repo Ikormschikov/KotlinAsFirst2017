@@ -64,9 +64,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
 fun digitNumber(n: Int) :Int {
-    var count: Int = 0
-    val dividend: Int = 10
-    var number: Int = abs(n)
+    var count = 0
+    val dividend = 10
+    var number = abs(n)
     if (number == 0) return count + 1
     while (number > 0) {
         if (number / dividend != 0 || number / dividend == 1 || number / dividend == 0) {
@@ -151,7 +151,7 @@ fun isCoPrime(m: Int, n: Int):Boolean {
             return false
         }
     }
-        return true
+    return true
 }
 
 
