@@ -363,4 +363,93 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+     val numeral = arrayListOf("","один","два","три","четыре","пять","шесть","семь","восемь","девять")
+     val dozensOf = arrayListOf("","десять","двадцать","тридцать","сорок","пятьдесят","шестьдесят","семьдесят","восемьдесят","девяносто")
+     val hundreds = arrayListOf("","сто","двести","триста","четыреста","пятьсот","шестьсот","семьсот","восемьсот","девятьсот")
+     val thousandsOf = arrayListOf("","одна тысяча","две тысячи","три тысячи","четре тысячи","пять тысяч","шесть тысяч",
+     "семь тысяч","восемь тысяч","девять тысяч")
+     val exception = arrayListOf("","одиннадцать","двенадцать","тринадцать","четырнадцать","пятнадцать","шестнадцать","семнадцать",
+     "восемнадцать","девятнадцать")
+     val exception2 = arrayListOf("","одиннадцать тысяч","двенадцать тысяч","тринадцать тысяч","четырнадцать тысяч","пятнадцать тысяч",
+     "шестнадцать тысяч","семнадцать тысяч","восемнадцать тысяч","девятнадцать тысяч")
+     var number = n
+     var count = 0
+     var list = mutableListOf<Any>()
+     while (number > 0) {
+         number /= 10
+         count++
+     }
+     number = n
+     while (number > 0) {
+         if (count == 1) {
+             list.add(numeral[number % 10])
+             number -= number
+         }
+         if (count == 2) {
+             if (number in 11 .. 19) {
+                 list.add(exception[number % 10])
+             }
+             list.add(numeral[number % 10])
+             list.add(dozensOf[(number % 100) / 10])
+             number -= number
+         }
+         if (count == 3) {
+             if (number % 100 in 11 .. 19) {
+                 list.add(exception[number % 10])
+             } else {
+                 list.add(numeral[number % 10])
+                 list.add(dozensOf[(number % 100) / 10])
+             }
+             list.add(hundreds[(number % 1000) / 100])
+             number -= number
+         }
+         if (count == 4) {
+             if (number % 100 in 11 .. 19) {
+                 list.add(exception[number % 10])
+             } else {
+                 list.add(numeral[number % 10])
+                 list.add(dozensOf[(number % 100) / 10])
+             }
+             list.add(hundreds[(number % 1000) / 100])
+             list.add(thousandsOf[(number % 10000) / 1000])
+             number -= number
+         }
+         if (count == 5) {
+             if (number % 100 in 11 .. 19) {
+                 list.add(exception[number % 10])
+             } else {
+                 list.add(numeral[number % 10])
+                 list.add(dozensOf[(number % 100) / 10])
+             }
+             list.add(hundreds[(number % 1000) / 100])
+             if (number / 1000 in 11 .. 19) {
+                 list.add(exception2[(number / 1000) % 10])
+             } else {
+                 list.add(thousandsOf[(number % 10000) / 1000])
+                 list.add(dozensOf[(number % 100000) / 10000])
+             }
+             number -= number
+         }
+         if (count == 6) {
+             if (number % 100 in 11 .. 19) {
+                 list.add(exception[number % 10])
+             } else {
+                 list.add(numeral[number % 10])
+                 list.add(dozensOf[(number % 100) / 10])
+             }
+             list.add(hundreds[(number % 1000) / 100])
+             if ((number % 100000) / 1000 in 11 .. 19) {
+                 list.add(exception2[(number / 1000) % 10])
+             } else {
+                 list.add(thousandsOf[(number % 10000) / 1000])
+                 list.add(dozensOf[(number % 100000) / 10000])
+             }
+             list.add(hundreds[(number % 1000000) / 100000])
+             number -= number
+         }
+     }
+     list.reverse()
+     list.remove("")
+     return list.joinToString(separator = " ")
+ }
