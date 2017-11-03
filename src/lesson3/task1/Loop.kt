@@ -65,13 +65,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int) :Int {
     var count: Int = 0
-    val a: Int = 10
-    var b: Int = n
-    if ( b == 0) return count + 1
-    while (b > 0) {
-        if (b / a != 0 || b / a == 1 || b / a == 0) {
+    val dividend: Int = 10
+    var number: Int = abs(n)
+    if (number == 0) return count + 1
+    while (number > 0) {
+        if (number / dividend != 0 || number / dividend == 1 || number / dividend == 0) {
             count++
-            b/=10
+            number /= 10
         }
     }
     return count
@@ -262,17 +262,17 @@ fun hasDifferentDigits(n: Int): Boolean  {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
     fun squareSequenceDigit(n: Int): Int  {
-    var a = mutableListOf<Long>(0) // создаю список из послеовательности квадратов
+    var a = mutableListOf<Int>(0) // создаю список из послеовательности квадратов
     var i = 0
     while (a.size-1 < n) {
         i++
-        val digits = mutableListOf<Long>() // список для квадратов
-        var sqrI:Long = sqr(i.toDouble()).toLong()
-        while (sqrI > 0)
-        {
-            digits.add(0, sqrI % 10) // раскладываю квадрат на элементы
-                sqrI /= 10
+        val digits = mutableListOf<Int>() // список для квадратов
+        var sqrI = sqr(i.toDouble()).toInt()
+        while (sqrI > 0) {
+            digits.add(sqrI % 10)// раскладываю квадрат на элементы
+            sqrI /= 10
         }
+        digits.reverse()
         a = (a + digits).toMutableList()
     }
     return a[n].toInt()
