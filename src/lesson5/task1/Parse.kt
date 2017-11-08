@@ -75,7 +75,7 @@ fun dateStrToDigit(str: String): String {
         val day = parts[0].toInt()
         val month = arrayOfMonth.indexOf(parts[1]).toInt()
         val year = parts[2].toInt()
-        if (parts[1] in arrayOfMonth) return String.format("%02d.%02d.%04d", day, month, year) else return ""
+        if (parts[1] in arrayOfMonth) return String.format("%02d.%02d.%d", day, month, year) else return ""
     }
     catch (e: NumberFormatException) {
         return ""
@@ -99,7 +99,7 @@ fun dateDigitToStr(digital: String): String {
         val day = parts[0].toInt()
         val month = arrayOfMonth.elementAt(parts[1].toInt())
         val year = parts[2].toInt()
-        if (month in arrayOfMonth) return String.format("%d %s %04d", day, month, year) else return ""
+        if (month in arrayOfMonth) return String.format("%d %s %d", day, month, year) else return ""
     }
     catch (e: NumberFormatException) {
         return ""
