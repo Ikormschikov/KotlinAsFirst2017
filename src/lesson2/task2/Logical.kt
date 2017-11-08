@@ -18,13 +18,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean {
-    val firstNumber = number / 1000
-    val secondNumber = number % 1000 / 100
-    val thirdnumber = number % 100 / 10
-    val lastNumber = number % 10
-    return if (firstNumber + secondNumber == thirdnumber + lastNumber) true else return false
+fun isNumberHappy(number: Int): Boolean = when {
+    number / 1000 + number % 1000 / 100 == number % 100 / 10 + number % 10 -> true
+    else -> false
 }
+
 
 /**
  * Простая
@@ -33,14 +31,11 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val theFirstCondition = x1 == x2
-    val theSecondCondition = y1 == y2
-    val theFirstSubtraction = x1 - x2
-    val theSecondSubtraction = y1 - y2
-    if (theFirstCondition || theSecondCondition || abs(theFirstSubtraction) == abs(theSecondSubtraction)) return true
-    else return false
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
+    x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2) -> true
+    else -> false
 }
+
 
 
 
@@ -52,12 +47,10 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean {
-    val distance = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
-    val difference = abs(r2 - r1)
-    if (r1 > r2) return false
-    if (distance <= difference) return true else return false
-    }
+                 x2: Double, y2: Double, r2: Double): Boolean = when {
+    sqrt(sqr(x1 - x2) + sqr(y1 - y2)) <= abs(r2 - r1) -> true
+    else -> false
+}
 
 
 
@@ -74,7 +67,7 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val r1 = r >= a
     val r2 = r >= b
     val r3 = r >= c
-    val s1 = s >=  a
+    val s1 = s >= a
     val s2 = s >= b
     val s3 = s >= c
     return when {
