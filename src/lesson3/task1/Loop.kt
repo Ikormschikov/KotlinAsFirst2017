@@ -295,21 +295,22 @@ fun fibSequenceDigit(n: Int): Int {
         while (a.size - 1 < v) {
             i++
             val digits = mutableListOf<Long>()
-            var b:Long = a[(i - 1).toInt()] + a[(i - 2).toInt()]
+            var b:Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
                     while (b > 0) {
-                digits.add(0, b * 1)
+                digits.add(b)
                     b -= b
             }
-            a = (a + digits).toMutableList<Long>()
+            a.addAll(digits)
         }
             for ( element in a) {
                 val digits2 = mutableListOf<Long>()
                 var element1:Long = element
                         while ( element1 > 0 ) {
-                            digits2.add(0, element1 % 10)
+                            digits2.add(element1 % 10)
                             element1 /= 10
                         }
-                            c = (c + digits2).toMutableList<Long>()
+                        digits2.reverse()
+                        c.addAll(digits2)
             }
             return c[v.toInt()].toInt()
         }

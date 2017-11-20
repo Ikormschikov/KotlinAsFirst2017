@@ -109,9 +109,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var a:Double = 0.0
-        if (v.isEmpty()) return 0.0
     for (element in v) {
-            a += element * element
+         a += element * element
     }
     return sqrt(a)
 }
@@ -121,16 +120,10 @@ fun abs(v: List<Double>): Double {
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    var a: Double = 0.0
-        val b: Double = list.size.toDouble()
-    if (list.isEmpty()) return 0.0
-        for (element in list) {
-             a += element
-    }
-    return a / b
+fun mean(list: List<Double>): Double = when {
+    list.isEmpty() -> 0.0
+    else -> list.sum() / list.size
 }
-
 
 /**
  * Средняя
@@ -142,10 +135,10 @@ fun mean(list: List<Double>): Double {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val a:Double = list.sum() / list.size
-        if (list.isEmpty()) return list
-            for (i in 0 until list.size ){
+    if (list.isEmpty()) return list
+    for (i in 0 until list.size ){
         val element = list[i]
-            list[i] = element - a
+        list[i] = element - a
     }
     return list
 }
@@ -170,15 +163,13 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
 fun polynom(p: List<Double>, x: Double): Double {
     if (p.isEmpty()) return 0.0
     var result = 0.0
-    var b = 0.0
-    var a = p.first()
-    var b1 = 0.0
-    if (p.size < 2) return a
+    var firstNumber = p.first()
+    var halfResult = 0.0
+    if (p.size < 2) return firstNumber
     for (i in 1 until p.size) {
-        b = p[i] * pow(x, i.toDouble())
-        b1 = b1 + b
+        halfResult = halfResult + p[i] * pow(x, i.toDouble())
     }
-    result = a + b1
+    result = firstNumber + halfResult
     return result
 }
 /**
@@ -319,10 +310,6 @@ fun roman(n: Int): String {
     var list = mutableListOf<Any>()
     var number = n
     var count = 0
-    val last = number % 10
-    val last2 = (number % 100) / 10
-    var second = (number % 1000) / 100
-    val first = (number / 1000)
     while (number > 0) {
         number /= 10
         count++
