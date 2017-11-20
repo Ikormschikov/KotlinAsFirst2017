@@ -91,7 +91,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
     val rook = (kingX == rookX) || (kingY == rookY)
-    val bishop = Math.abs(bishopX -  kingX)  ==  Math.abs(bishopY - kingY)
+    val bishop = Math.abs(bishopX - kingX) == Math.abs(bishopY - kingY)
     return when {
         rook && bishop -> 3
         rook -> 1
@@ -111,7 +111,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 fun triangleKind(a: Double, b: Double, c: Double): Int {
   val list = listOf(a,b,c).sorted() // создаем список чисел по возрастанию
   val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1]) // находим угол по теореме косинусов
-    if (a + b <= c || a + c <= b || b + c <= a) {
+    if (list[0] + list[1] <= list[2]) {
         return -1
     }
     if (angle < 0) { // проверяем по таблице Брадиса
@@ -120,10 +120,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (angle > 0) {
         return 0
     }
-    if (angle == 0.0) {
-        return 1
-    }
-  return 4
+  return 1
 }
 
 /**
