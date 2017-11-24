@@ -109,12 +109,12 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-  val list = listOf(a,b,c).sorted() // создаем список чисел по возрастанию
-  val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1]) // находим угол по теореме косинусов
-    if (list[0] + list[1] <= list[2]) {
+  val list = listOf(a,b,c).sorted()
+  val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1])
+  if (list[0] + list[1] <= list[2]) {
         return -1
     }
-    if (angle < 0) { // проверяем по таблице Брадиса
+    if (angle < 0) {
         return 2
     }
     if (angle > 0) {
