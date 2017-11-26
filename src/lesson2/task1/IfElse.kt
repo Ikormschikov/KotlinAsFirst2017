@@ -111,7 +111,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 fun triangleKind(a: Double, b: Double, c: Double): Int {
   val list = listOf(a,b,c).sorted()
   val angle = (sqr(list[0]) + sqr(list[1]) - sqr(list[2])) / (2.0 * list[0] * list[1])
-  if (list[0] + list[1] <= list[2]) {
+    if (list[0] + list[1] <= list[2]) {
         return -1
     }
     if (angle < 0) {
@@ -132,17 +132,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    var e = Math.max(a,b)
-    var f = Math.max(c,d)
-    var g = Math.min(a,b)
-    var h = Math.min(c,d)
-    return when {
-        e in h .. f && g in h .. f -> e - g
-        h in g .. e && f in g .. e -> f - h
-        g in h .. f && e >= f -> f - g
-        h in g .. e && f >= e -> e - h
-        f in g .. e -> e - g
-        else -> -1
+   var e = Math.max(a,b)
+   var f = Math.max(c,d)
+   var g = Math.min(a,b)
+   var h = Math.min(c,d)
+   return when {
+       e in h .. f && g in h .. f -> e - g
+       h in g .. e && f in g .. e -> f - h
+       g in h .. f && e >= f -> f - g
+       h in g .. e && f >= e -> e - h
+       f in g .. e -> e - g
+       else -> -1
     }
 }
 
