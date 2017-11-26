@@ -1,6 +1,10 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import org.omg.CosNaming.NamingContextPackage.NotFound
+import java.util.regex.Pattern
+import javax.lang.model.type.NullType
+
 /**
  * Пример
  *
@@ -118,7 +122,12 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val partsOfNumber = Regex("""[\+\-\(\)\s]""").replace(phone, "")
+    if (partsOfNumber.contains(Regex("""\D"""))) return ""
+    if (phone.contains(Regex("""\+"""))) return "+" + partsOfNumber
+    else return partsOfNumber
+}
 
 /**
  * Средняя
@@ -130,7 +139,19 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val numbers = Regex("""[\%\-\s]""").replace(jumps, "")
+    if (numbers.contains(Regex("""\D"""))) return -1
+    if (numbers.isEmpty()) return  -1
+    var numbers1 = numbers.toLong()
+    var listOfNumbers = mutableListOf<Long>()
+    while (numbers1 > 0) {
+        listOfNumbers.add(0, (numbers1 % 1000))
+        numbers1 /= 1000
+    }
+    val maximum = listOfNumbers.max()
+    return maximum!!.toInt()
+}
 
 /**
  * Сложная
@@ -142,7 +163,22 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
+    if (verify.contains(Regex("""\D"""))) return -1
+    val string = Regex("""(\s)\+""").replace(jumps, "+")
+    var max = "0"
+    val parts = string.split(" ")
+    for (part in parts) {
+        if (part.contains(Regex("""([0-9]{3}\+)"""))) {
+            val result = Regex("""[\+]""").replace(part, "")
+            if (result > max) {
+                max = result
+            }
+        } else continue
+    }
+    return max.toInt()
+}
 
 /**
  * Сложная
@@ -164,7 +200,19 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    if (parts.size == 1) return -1
+    var result = 0
+    for (part in parts) {
+        if (str.contains(Regex("""(\$part+)\s\1"""))) {
+            for (i in str) {
+                result = str[.toInt()].toInt()
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
