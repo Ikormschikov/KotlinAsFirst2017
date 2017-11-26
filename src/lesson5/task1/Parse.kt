@@ -125,6 +125,7 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val partsOfNumber = Regex("""[\+\-\(\)\s]""").replace(phone, "")
     if (partsOfNumber.contains(Regex("""\D"""))) return ""
+    if (phone.contains(Regex("""\+$"""))) return ""
     if (phone.contains(Regex("""\+"""))) return "+" + partsOfNumber
     else return partsOfNumber
 }
@@ -166,7 +167,8 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
     if (verify.contains(Regex("""\D"""))) return -1
-    val string = Regex("""(\s)\+""").replace(jumps, "+")
+    var string = Regex("""[\%\-]""").replace(jumps, "")
+    string = Regex("""(\s)\+""").replace(jumps, "+")
     var max = "0"
     val parts = string.split(" ")
     for (part in parts) {
