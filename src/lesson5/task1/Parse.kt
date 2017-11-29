@@ -168,7 +168,7 @@ fun bestHighJump(jumps: String): Int {
     val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
     if (verify.contains(Regex("""\D"""))) return -1
     var string = Regex("""[\%\-]""").replace(jumps, "")
-    string = Regex("""(\s)\+""").replace(jumps, "+")
+    string = Regex("""(\s)\+""").replace(string, "+")
     var max = "0"
     val parts = string.split(" ")
     for (part in parts) {
@@ -191,7 +191,29 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val parts = expression.split(" ")
+    var result:Int
+    try {
+        var halfResult = parts[0].toInt()
+        for (i in 1 until parts.size ) {
+            val firstElement = parts[i]
+            if (firstElement == "+") {
+                halfResult += parts[i + 1].toInt()
+            }
+            if (firstElement == "-"){
+                halfResult -= parts[i + 1].toInt()
+            }
+            if (firstElement.contains(Regex("""([0-9]*)"""))) {
+                continue
+            }
+        }
+        result = halfResult
+    } catch (e: IllegalArgumentException) {
+        throw IllegalArgumentException()
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -202,7 +224,20 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    if (parts.size == 1) return -1
+    var result = 0
+    for (part in parts) {
+        if ((str.contains(Regex("""(\$part+)\s\1""")))) {
+            result = str.indexOf(part)
+        }
+        if (str.contains(Regex("""(\$part+)\s\1""")) == null) {
+            result = -1
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
