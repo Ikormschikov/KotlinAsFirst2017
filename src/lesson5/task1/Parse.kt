@@ -172,9 +172,9 @@ fun bestHighJump(jumps: String): Int {
     var max = "0"
     val parts = string.split(" ")
     for (part in parts) {
-        if (part.contains(Regex("""([0-9]{3}\+)"""))) {
+        if (part.contains(Regex("""([0-9]*\+)"""))) {
             val result = Regex("""[\+]""").replace(part, "")
-            if (result > max) {
+            if (result.toLong() > max.toLong()) {
                 max = result
             }
         } else continue
