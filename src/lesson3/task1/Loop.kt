@@ -65,15 +65,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int) :Int {
     var count = 0
-    val dividend = 10
     var number = abs(n)
-    if (number == 0) return count + 1
-    while (number > 0) {
-        if (number / dividend != 0 || number / dividend == 1 || number / dividend == 0) {
+    do {
+        if (number / 10 != 0 || number / 10 == 1 || number / 10 == 0) {
             count++
             number /= 10
         }
-    }
+    } while (number > 0)
     return count
 }
 
@@ -83,7 +81,20 @@ fun digitNumber(n: Int) :Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = if (n > 2) fib(n - 1) + fib(n - 2) else 1
+fun fib(n: Int): Int = numberFib(n)
+
+fun numberFib(a:Int):Int {
+    var lastNumber = 1
+    var nextNumber = 1
+    var result = 0
+    if (a == 1 || a == 2) return 1
+    for (i in 3 .. a) {
+        result = lastNumber + nextNumber
+        lastNumber = nextNumber
+        nextNumber = result
+    }
+    return result
+}
 
 
 /**
@@ -92,49 +103,34 @@ fun fib(n: Int): Int = if (n > 2) fib(n - 1) + fib(n - 2) else 1
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var i1: Int = Math.max(m,n)
-    var i2: Int = Math.min(m,n)
-    var result: Int = 0
-    for (b in i1..i1 * i2) {
-        if (b % i1 == 0 && b % i2 == 0) {
-            result = b
-            return result
-        }
-    }
-    return result
-}
+fun lcm(m: Int, n: Int): Int = m * n / nok(m,n)
 
+fun nok(a:Int,b:Int):Int = if (b == 0) a else nok(b,a % b)
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int {
-    var result: Int = 0
-    for (i in 2..n) {
-        if (n % i == 0) {
-            result = i
-            return result
-        }
-    }
-    return result
+fun minDivisor(n: Int): Int = minResult(n)
+
+fun minResult(a:Int):Int {
+    for (i in 2 until a)
+        if (a % i == 0) return i
+    return a
 }
+
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var result: Int = 0
-    for (i in 1..n - 1) {
-         if (n % i == 0) {
-            result = i
+fun maxDivisor(n: Int): Int = maxResult(n)
 
-        }
-    }
-    return result
+fun maxResult(a:Int):Int {
+    for (i in a - 1 downTo  1)
+        if (a % i == 0) return i
+    return a
 }
 
 /**
@@ -209,7 +205,7 @@ fun revert(n: Int): Int   {
          a = b + a * 10
          c /= 10
     }
-     return a
+    return a
 }
 
 /**
