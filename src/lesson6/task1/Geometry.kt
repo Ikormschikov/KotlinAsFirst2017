@@ -2,6 +2,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
+import lesson2.task2.pointInsideCircle
 
 /**
  * Точка на плоскости
@@ -12,7 +13,7 @@ data class Point(val x: Double, val y: Double) {
      *
      * Рассчитать (по известной формуле) расстояние между двумя точками
      */
-    fun distance(other: Point): Double = Math.sqrt(sqr(x - other.x) + sqr(y - other.y))
+    fun distance(other: Point): Double = Math.sqrt(sqr(x - other.x).toDouble() + sqr(y - other.y))
 }
 
 /**
@@ -72,14 +73,18 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        val centers = center.distance(other.center)
+        val sumOfRadius = radius + other.radius
+        if (centers - sumOfRadius > 0) return centers - sumOfRadius else return 0.0
+    }
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean = sqr(p.x - center.x) + sqr(p.y - center.y) <= sqr(radius)
 }
 
 /**
@@ -193,4 +198,3 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
  * соединяющий две самые удалённые точки в данном множестве.
  */
 fun minContainingCircle(vararg points: Point): Circle = TODO()
-

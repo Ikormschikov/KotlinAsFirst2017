@@ -123,11 +123,17 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val partsOfNumber = Regex("""[\+\-\(\)\s]""").replace(phone, "")
-    if (partsOfNumber.contains(Regex("""\D"""))) return ""
+    var string = ""
+    val verify = Regex("""[\+\-\(\)\s]""").replace(phone, "")
+    if (verify.contains(Regex("""\D"""))) return ""
     if (phone.contains(Regex("""\+$"""))) return ""
-    if (phone.contains(Regex("""\+"""))) return "+" + partsOfNumber
-    else return partsOfNumber
+    val parts = Regex("""[\-\(\)\s]""").replace(phone, " ").split(" ")
+    for (part in parts) {
+        if (part.contains(Regex("""(\+[0-9]*)""")) || part.contains(Regex("""([0-9]*)"""))) {
+            string += part
+        } else continue
+    }
+    return string
 }
 
 /**
@@ -165,20 +171,22 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
-    if (verify.contains(Regex("""\D"""))) return -1
-    var string = Regex("""[\%\-]""").replace(jumps, "")
-    string = Regex("""(\s)\+""").replace(string, "+")
     var max = "0"
-    val parts = string.split(" ")
-    for (part in parts) {
-        if (part.contains(Regex("""([0-9]*\+)"""))) {
-            val result = Regex("""[\+]""").replace(part, "")
-            if (result.toLong() > max.toLong()) {
-                max = result
-            }
-        } else continue
-    }
+    if (jumps.isNotEmpty()) {
+        val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
+        if (verify.contains(Regex("""\D"""))) return -1
+        var string = Regex("""[\%\-]""").replace(jumps, "")
+        string = Regex("""(\s)\+""").replace(string, "+")
+        val parts = string.split(" ")
+        for (part in parts) {
+            if (part.contains(Regex("""([0-9]*\+)"""))) {
+                val result = Regex("""[\+]""").replace(part, "")
+                if (result.toLong() > max.toLong()) {
+                    max = result
+                }
+            } else continue
+        }
+    } else return -1
     return max.toInt()
 }
 
@@ -193,22 +201,24 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
-    var result:Int
+    var result = 0
     try {
-        var halfResult = parts[0].toInt()
-        for (i in 1 until parts.size ) {
-            val firstElement = parts[i]
-            if (firstElement == "+") {
-                halfResult += parts[i + 1].toInt()
+        if (expression.contains(Regex("""[\d\+\-\s]"""))) {
+            var halfResult = parts[0].toInt()
+            for (i in 1 until parts.size) {
+                val firstElement = parts[i]
+                if (firstElement == "+") {
+                    halfResult += parts[i + 1].toInt()
+                }
+                if (firstElement == "-") {
+                    halfResult -= parts[i + 1].toInt()
+                }
+                if (firstElement.contains(Regex("""([0-9]*)"""))) {
+                    continue
+                }
             }
-            if (firstElement == "-"){
-                halfResult -= parts[i + 1].toInt()
-            }
-            if (firstElement.contains(Regex("""([0-9]*)"""))) {
-                continue
-            }
+            result = halfResult
         }
-        result = halfResult
     } catch (e: IllegalArgumentException) {
         throw IllegalArgumentException()
     }
