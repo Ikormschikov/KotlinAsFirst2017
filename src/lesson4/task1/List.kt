@@ -108,9 +108,9 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * Модуль пустого вектора считать равным 0.0.
  */
 fun abs(v: List<Double>): Double {
-    var a:Double = 0.0
+    var a = 0.0
     for (element in v) {
-         a += element * element
+        a += element * element
     }
     return sqrt(a)
 }
@@ -134,7 +134,7 @@ fun mean(list: List<Double>): Double = when {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val a:Double = list.sum() / list.size
+    val a:Double = mean(list)
     if (list.isEmpty()) return list
     for (i in 0 until list.size ){
         val element = list[i]
@@ -162,14 +162,12 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
  */
 fun polynom(p: List<Double>, x: Double): Double {
     if (p.isEmpty()) return 0.0
+    if (p.size < 2) return p.first()
     var result = 0.0
-    var firstNumber = p.first()
-    var halfResult = 0.0
-    if (p.size < 2) return firstNumber
     for (i in 1 until p.size) {
-        halfResult = halfResult + p[i] * pow(x, i.toDouble())
+        result = result + p[i] * pow(x, i.toDouble())
     }
-    result = firstNumber + halfResult
+    result += p.first()
     return result
 }
 /**
@@ -210,8 +208,7 @@ fun factorize(n: Int): List<Int> {
         }
        else divider++
     }
-    multipliers = multipliers.sorted().toMutableList()
-    return multipliers
+    return multipliers.sorted()
 }
 
 /**
@@ -228,11 +225,11 @@ fun factorizeToString(n: Int): String {
         if (dividend % divider == 0) {
             multipliers.add (0 , divider)
             dividend /= divider
+        } else {
+            divider++
         }
-        else divider++
     }
-    multipliers = multipliers.sorted().toMutableList()
-    return multipliers.joinToString ( separator = "*")
+    return multipliers.sorted().joinToString ( separator = "*")
 }
 
 /**

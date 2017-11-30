@@ -128,7 +128,7 @@ fun minResult(a:Int):Int {
 fun maxDivisor(n: Int): Int = maxResult(n)
 
 fun maxResult(a:Int):Int {
-    for (i in a - 1 downTo  1)
+    for (i in a - 1 downTo 1)
         if (a % i == 0) return i
     return a
 }
@@ -143,7 +143,7 @@ fun maxResult(a:Int):Int {
 fun isCoPrime(m: Int, n: Int):Boolean {
     var a: Int = Math.min(m, n)
     for (i in 2..a) {
-         if ( m % i == 0 && n % i == 0) {
+        if ( m % i == 0 && n % i == 0) {
             return false
         }
     }
@@ -161,17 +161,14 @@ fun isCoPrime(m: Int, n: Int):Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var a: Int = min(m, n)
-    var b: Int = max(m, n)
-    for (i in a..b) {
-        var c: Int = i
-    for (j in 1 .. c){
-        if ( j * j != c)
-        return false
-        }
+fun squareBetweenExists(m: Int, n: Int): Boolean = helpSquare(m,n)
+
+fun helpSquare(a:Int,b:Int):Boolean {
+    for (i in min(a, b) .. max(a, b)) {
+        val square = sqrt(i.toDouble()).toInt()
+        if (square * square == i) return true
     }
-    return true
+    return false
 }
 /**
  * Средняя
@@ -197,13 +194,13 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Поменять порядок цифр заданного числа n на обратный: 13478 -> 87431.
  * Не использовать строки при решении задачи.
  */
-fun revert(n: Int): Int   {
-    var a : Int = 0
-    var c:Int = n
-    while ( c > 0) {
-        var b:Int = c % 10
-         a = b + a * 10
-         c /= 10
+fun revert(n: Int): Int {
+    var a = 0
+    var c = n
+    while (c > 0) {
+        val b = c % 10
+        a = b + a * 10
+        c /= 10
     }
     return a
 }
@@ -215,17 +212,7 @@ fun revert(n: Int): Int   {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-    var a:Int = 0
-    var c:Int = n
-    while ( c > 0) {
-        var b:Int = c % 10
-            a = b + a * 10
-            c /= 10
-    }
-    if (a == n) return true
-    else return false
-}
+fun isPalindrome(n: Int): Boolean = (n == revert(n))
 
 /**
  * Средняя
@@ -233,22 +220,19 @@ fun isPalindrome(n: Int): Boolean {
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean  {
-   var b:Int = n
-   var a:Int = b % 10
-   var count:Int = 0
-   while (b > 0){
-        if (a != b % 10) {
-        count++
-   }
-        b /= 10
-        if (count >= 1) return true
-   }
+fun hasDifferentDigits(n: Int): Boolean = verify(n)
+
+fun verify(a:Int):Boolean {
+    var number = a
+    var firstVerify = number % 10
+    while (number > 0) {
+        if (firstVerify == number % 10) {
+            number /= 10
+        }
+        else return true
+    }
     return false
- }
-
-
-
+}
 
 /**
  * Сложная
@@ -257,10 +241,10 @@ fun hasDifferentDigits(n: Int): Boolean  {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-    fun squareSequenceDigit(n: Int): Int  {
+    fun squareSequenceDigit(n: Int): Int {
     var a = mutableListOf<Int>(0) // создаю список из послеовательности квадратов
     var i = 0
-    while (a.size-1 < n) {
+    while (a.size - 1 < n) {
         i++
         val digits = mutableListOf<Int>() // список для квадратов
         var sqrI = sqr(i.toDouble()).toInt()
@@ -275,6 +259,8 @@ fun hasDifferentDigits(n: Int): Boolean  {
 }
 
 
+
+
 /**
  * Сложная
  *
@@ -287,27 +273,27 @@ fun fibSequenceDigit(n: Int): Int {
     var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
     var i:Long = 2
     var v:Long = n.toLong()
-        if (n == 1 || n == 2) return 1
-        while (a.size - 1 < v) {
-            i++
-            val digits = mutableListOf<Long>()
-            var b:Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
-                    while (b > 0) {
-                digits.add(b)
-                    b -= b
-            }
-            a.addAll(digits)
+    if (n == 1 || n == 2) return 1
+    while (a.size - 1 < v) {
+        i++
+        val digits = mutableListOf<Long>()
+        var b:Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
+        while (b > 0) {
+            digits.add(b)
+            b -= b
         }
-            for ( element in a) {
-                val digits2 = mutableListOf<Long>()
-                var element1:Long = element
-                        while ( element1 > 0 ) {
-                            digits2.add(element1 % 10)
-                            element1 /= 10
-                        }
-                        digits2.reverse()
-                        c.addAll(digits2)
-            }
-            return c[v.toInt()].toInt()
+        a.addAll(digits)
+    }
+    for (element in a) {
+        val digits2 = mutableListOf<Long>()
+        var element1:Long = element
+        while (element1 > 0 ) {
+            digits2.add(element1 % 10)
+            element1 /= 10
         }
+        digits2.reverse()
+        c.addAll(digits2)
+    }
+    return c[v.toInt()].toInt()
+}
 
