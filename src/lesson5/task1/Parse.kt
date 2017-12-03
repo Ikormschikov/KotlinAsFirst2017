@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import lesson3.task1.cos
 import org.omg.CosNaming.NamingContextPackage.NotFound
 import java.util.regex.Pattern
 import javax.lang.model.type.NullType
@@ -172,23 +173,22 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var max = "0"
-    if (jumps.isNotEmpty()) {
-        val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
-        if (verify.contains(Regex("""\D"""))) return -1
-        var string = Regex("""[\%\-]""").replace(jumps, "")
-        string = Regex("""(\s)\+""").replace(string, "+")
-        val parts = string.split(" ")
-        for (part in parts) {
-            if (part.contains(Regex("""([0-9]*\+)"""))) {
-                val result = Regex("""[\+]""").replace(part, "")
-                if (result.toLong() > max.toLong()) {
-                    max = result
-                }
-            } else continue
+    val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
+    if (verify.contains(Regex("""\D"""))) return -1
+    var string = Regex("""[\%\-]""").replace(jumps, "")
+    string = Regex("""(\s)\+""").replace(string, "+")
+    val parts = string.split(" ")
+    for (part in parts) {
+        if (part.contains(Regex("""([0-9]*\+)"""))) {
+            val result = Regex("""[\+]""").replace(part, "")
+            if (result.toLong() > max.toLong()) {
+                max = result
+            }
         }
-    } else return -1
-    return max.toInt()
+    }
+    if (max.toInt() != 0) return max.toInt() else return -1
 }
+
 
 /**
  * Сложная
@@ -203,27 +203,26 @@ fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     var result = 0
     try {
-        if (expression.contains(Regex("""[\d\+\-\s]"""))) {
-            var halfResult = parts[0].toInt()
-            for (i in 1 until parts.size) {
-                val firstElement = parts[i]
-                if (firstElement == "+") {
-                    halfResult += parts[i + 1].toInt()
-                }
-                if (firstElement == "-") {
-                    halfResult -= parts[i + 1].toInt()
-                }
-                if (firstElement.contains(Regex("""([0-9]*)"""))) {
-                    continue
-                }
+        var halfResult = parts[0].toInt()
+        for (i in 1 until parts.size) {
+            val firstElement = parts[i]
+            if (firstElement == "+") {
+                halfResult += parts[i + 1].toInt()
             }
-            result = halfResult
+            if (firstElement == "-") {
+                halfResult -= parts[i + 1].toInt()
+            }
+            if (firstElement.contains(Regex("""([0-9]*)"""))) {
+                continue
+            }
         }
+        result = halfResult
     } catch (e: IllegalArgumentException) {
         throw IllegalArgumentException()
     }
     return result
 }
+
 
 /**
  * Сложная
@@ -263,7 +262,27 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var name = mutableListOf<String>("")
+    var cost = mutableListOf<Double>(0.0)
+    var max = 0.0
+    if (description.isNotEmpty()) {
+        val verify = Regex("""[[а-яА-Я]\s\.\;]""").replace(description, "")
+        if (verify.contains(Regex("""\D"""))) return ""
+        val parts = description.split("; ")
+        for (part in parts) {
+            val secondPart = part.split(" ")
+            if (secondPart[1].toDouble() > max) {
+                name.remove(name.last())
+                cost.remove(cost.last())
+                name.add(0, secondPart[0])
+                cost.add(0, secondPart[1].toDouble())
+                max = secondPart[1].toDouble()
+            }
+        }
+    }
+    return name.joinToString()
+}
 
 /**
  * Сложная
