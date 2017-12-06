@@ -81,14 +81,12 @@ fun digitNumber(n: Int) :Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = numberFib(n)
-
-fun numberFib(a:Int):Int {
+fun fib(n: Int): Int {
     var lastNumber = 1
     var nextNumber = 1
     var result = 0
-    if (a == 1 || a == 2) return 1
-    for (i in 3 .. a) {
+    if (n == 1 || n == 2) return 1
+    for (i in 3 .. n) {
         result = lastNumber + nextNumber
         lastNumber = nextNumber
         nextNumber = result
@@ -96,28 +94,25 @@ fun numberFib(a:Int):Int {
     return result
 }
 
-
 /**
  * Простая
  *
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = m * n / nok(m,n)
+fun lcm(m: Int, n: Int): Int = m * n / hcf(m,n)
 
-fun nok(a:Int,b:Int):Int = if (b == 0) a else nok(b,a % b)
+fun hcf(a:Int,b:Int):Int = if (b == 0) a else hcf(b,a % b)
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = minResult(n)
-
-fun minResult(a:Int):Int {
-    for (i in 2 until a)
-        if (a % i == 0) return i
-    return a
+fun minDivisor(n: Int): Int {
+    for (i in 2 until n)
+        if (n % i == 0) return i
+    return n
 }
 
 /**
@@ -125,12 +120,10 @@ fun minResult(a:Int):Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = maxResult(n)
-
-fun maxResult(a:Int):Int {
-    for (i in a - 1 downTo 1)
-        if (a % i == 0) return i
-    return a
+fun maxDivisor(n: Int): Int {
+    for (i in n - 1 downTo 1)
+        if (n % i == 0) return i
+    return n
 }
 
 /**
@@ -142,7 +135,7 @@ fun maxResult(a:Int):Int {
  */
 fun isCoPrime(m: Int, n: Int):Boolean {
     var a: Int = Math.min(m, n)
-    for (i in 2..a) {
+    for (i in 2 .. a) {
         if ( m % i == 0 && n % i == 0) {
             return false
         }
@@ -161,10 +154,8 @@ fun isCoPrime(m: Int, n: Int):Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = helpSquare(m,n)
-
-fun helpSquare(a:Int,b:Int):Boolean {
-    for (i in min(a, b) .. max(a, b)) {
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    for (i in min(m, n) .. max(m, n)) {
         val square = sqrt(i.toDouble()).toInt()
         if (square * square == i) return true
     }
@@ -220,16 +211,11 @@ fun isPalindrome(n: Int): Boolean = (n == revert(n))
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = verify(n)
-
-fun verify(a:Int):Boolean {
-    var number = a
-    var firstVerify = number % 10
+fun hasDifferentDigits(n: Int): Boolean {
+    var number = n
+    var lastNumber = number % 10
     while (number > 0) {
-        if (firstVerify == number % 10) {
-            number /= 10
-        }
-        else return true
+        if (lastNumber == number % 10) number /= 10 else return true
     }
     return false
 }
@@ -241,7 +227,7 @@ fun verify(a:Int):Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-    fun squareSequenceDigit(n: Int): Int {
+fun squareSequenceDigit(n: Int): Int {
     var a = mutableListOf<Int>(0) // создаю список из послеовательности квадратов
     var i = 0
     while (a.size - 1 < n) {
@@ -258,9 +244,6 @@ fun verify(a:Int):Boolean {
     return a[n].toInt()
 }
 
-
-
-
 /**
  * Сложная
  *
@@ -271,13 +254,13 @@ fun verify(a:Int):Boolean {
 fun fibSequenceDigit(n: Int): Int {
     var a = mutableListOf<Long>(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
     var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
-    var i:Long = 2
-    var v:Long = n.toLong()
+    var i: Long = 2
+    var v: Long = n.toLong()
     if (n == 1 || n == 2) return 1
     while (a.size - 1 < v) {
         i++
         val digits = mutableListOf<Long>()
-        var b:Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
+        var b: Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
         while (b > 0) {
             digits.add(b)
             b -= b
@@ -286,8 +269,8 @@ fun fibSequenceDigit(n: Int): Int {
     }
     for (element in a) {
         val digits2 = mutableListOf<Long>()
-        var element1:Long = element
-        while (element1 > 0 ) {
+        var element1: Long = element
+        while (element1 > 0) {
             digits2.add(element1 % 10)
             element1 /= 10
         }
@@ -296,4 +279,8 @@ fun fibSequenceDigit(n: Int): Int {
     }
     return c[v.toInt()].toInt()
 }
+
+
+
+
 

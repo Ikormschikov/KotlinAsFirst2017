@@ -161,15 +161,13 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    if (p.isEmpty()) return 0.0
-    if (p.size < 2) return p.first()
     var result = 0.0
-    for (i in 1 until p.size) {
+    for (i in 0 until p.size) {
         result = result + p[i] * pow(x, i.toDouble())
     }
-    result += p.first()
     return result
 }
+
 /**
  * Средняя
  *
@@ -182,7 +180,6 @@ fun polynom(p: List<Double>, x: Double): Double {
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var a = 0.0
-    if (list.isEmpty()) return list
     for (i in 1 until list.size) {
         a = list[i] + list[i - 1]
         list[i] = a
