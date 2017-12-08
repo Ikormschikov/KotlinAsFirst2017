@@ -2,7 +2,6 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
-import javax.naming.NameNotFoundException
 import java.lang.Math.*
 /**
  * Пример
@@ -67,10 +66,8 @@ fun digitNumber(n: Int) :Int {
     var count = 0
     var number = abs(n)
     do {
-        if (number / 10 != 0 || number / 10 == 1 || number / 10 == 0) {
-            count++
-            number /= 10
-        }
+        number /= 10
+        count++
     } while (number > 0)
     return count
 }
@@ -86,7 +83,7 @@ fun fib(n: Int): Int {
     var nextNumber = 1
     var result = 0
     if (n == 1 || n == 2) return 1
-    for (i in 3 .. n) {
+    for (i in 3..n) {
         result = lastNumber + nextNumber
         lastNumber = nextNumber
         nextNumber = result
@@ -100,9 +97,9 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = m * n / hcf(m,n)
+fun lcm(m: Int, n: Int): Int = m * n / gcd(m,n)
 
-fun hcf(a:Int,b:Int):Int = if (b == 0) a else hcf(b,a % b)
+fun gcd(a:Int,b:Int):Int = if (b == 0) a else gcd(b,a % b)
 
 /**
  * Простая
@@ -110,7 +107,7 @@ fun hcf(a:Int,b:Int):Int = if (b == 0) a else hcf(b,a % b)
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (i in 2 until n)
+    for (i in 2..sqrt(n.toDouble()).toInt())
         if (n % i == 0) return i
     return n
 }
@@ -121,9 +118,9 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    for (i in n - 1 downTo 1)
+    for (i in n - 1 downTo sqrt(n.toDouble()).toInt())
         if (n % i == 0) return i
-    return n
+    return 1
 }
 
 /**
@@ -135,11 +132,8 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int):Boolean {
     var a: Int = Math.min(m, n)
-    for (i in 2 .. a) {
-        if ( m % i == 0 && n % i == 0) {
-            return false
-        }
-    }
+    for (i in 2..a)
+        if ( m % i == 0 && n % i == 0) return false
     return true
 }
 
@@ -155,7 +149,7 @@ fun isCoPrime(m: Int, n: Int):Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in min(m, n) .. max(m, n)) {
+    for (i in min(m, n)..max(m, n)) {
         val square = sqrt(i.toDouble()).toInt()
         if (square * square == i) return true
     }

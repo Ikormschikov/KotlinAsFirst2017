@@ -134,11 +134,10 @@ fun mean(list: List<Double>): Double = when {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val a:Double = mean(list)
+    val a = mean(list)
     if (list.isEmpty()) return list
     for (i in 0 until list.size ){
-        val element = list[i]
-        list[i] = element - a
+        list[i] -= a
     }
     return list
 }
@@ -163,7 +162,7 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
 fun polynom(p: List<Double>, x: Double): Double {
     var result = 0.0
     for (i in 0 until p.size) {
-        result = result + p[i] * pow(x, i.toDouble())
+        result += p[i] * pow(x, i.toDouble())
     }
     return result
 }
@@ -181,8 +180,8 @@ fun polynom(p: List<Double>, x: Double): Double {
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var a = 0.0
     for (i in 1 until list.size) {
-        a = list[i] + list[i - 1]
-        list[i] = a
+        list[i] += list[i - 1]
+
     }
     return list
 }
@@ -200,13 +199,16 @@ fun factorize(n: Int): List<Int> {
     var multipliers =  mutableListOf<Int>()
     while (dividend > 1) {
         if (dividend % divider == 0) {
-            multipliers.add (0 , divider)
+            multipliers.add(divider)
             dividend /= divider
+        } else {
+            divider++
         }
-       else divider++
     }
-    return multipliers.sorted()
+    return multipliers
 }
+
+
 
 /**
  * Сложная
@@ -214,20 +216,7 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String {
-    var dividend = n
-    var divider = 2
-    var multipliers =  mutableListOf<Int>()
-    while (dividend > 1) {
-        if (dividend % divider == 0) {
-            multipliers.add (0 , divider)
-            dividend /= divider
-        } else {
-            divider++
-        }
-    }
-    return multipliers.sorted().joinToString ( separator = "*")
-}
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
