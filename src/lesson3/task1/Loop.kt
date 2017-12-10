@@ -259,9 +259,9 @@ fun fibSequenceDigit(n: Int): Int {
     var result = 0
     while (count < n) {
         i++
-        result += fib(i)
-        count += digitNumber(result)
+        count += digitNumber(fib(i))
     }
+    result += fib(i)
     if (count - n != 0) {
         val list = addToList(result)
         return list[count - n]
