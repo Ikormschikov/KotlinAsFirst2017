@@ -222,22 +222,30 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var a = mutableListOf<Int>(0) // создаю список из послеовательности квадратов
     var i = 0
-    while (a.size - 1 < n) {
+    var count = 0
+    var result = 0
+    while (count < n) {
         i++
-        val digits = mutableListOf<Int>() // список для квадратов
-        var sqrI = sqr(i.toDouble()).toInt()
-        while (sqrI > 0) {
-            digits.add(sqrI % 10)// раскладываю квадрат на элементы
-            sqrI /= 10
-        }
-        digits.reverse()
-        a.addAll(digits)
+        result = sqr(i.toDouble()).toInt()
+        count += digitNumber(result)
     }
-    return a[n].toInt()
+    if (count - n != 0) {
+        val list = addToList(result)
+        return list[count - n]
+    }
+    return result % 10
 }
 
+fun addToList(a:Int): MutableList<Int> {
+    var number = a
+    var list = mutableListOf<Int>()
+    while (number > 0) {
+        list.add(number % 10)
+        number /= 10
+    }
+    return list
+}
 /**
  * Сложная
  *
@@ -246,35 +254,17 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var a = mutableListOf<Long>(0, 1, 1) //  создаю список из последовательности чисел Фибоначчи
-    var c = mutableListOf<Long>(0) // список,разбивающий числа > 9  списка а на отдельные элементы
-    var i: Long = 2
-    var v: Long = n.toLong()
-    if (n == 1 || n == 2) return 1
-    while (a.size - 1 < v) {
+    var i = 0
+    var count = 0
+    var result = 0
+    while (count < n) {
         i++
-        val digits = mutableListOf<Long>()
-        var b: Long = abs(a[(i - 1).toInt()] + a[(i - 2).toInt()]).toLong()
-        while (b > 0) {
-            digits.add(b)
-            b -= b
-        }
-        a.addAll(digits)
+        result += fib(i)
+        count += digitNumber(result)
     }
-    for (element in a) {
-        val digits2 = mutableListOf<Long>()
-        var element1: Long = element
-        while (element1 > 0) {
-            digits2.add(element1 % 10)
-            element1 /= 10
-        }
-        digits2.reverse()
-        c.addAll(digits2)
+    if (count - n != 0) {
+        val list = addToList(result)
+        return list[count - n]
     }
-    return c[v.toInt()].toInt()
+    return result % 10
 }
-
-
-
-
-
