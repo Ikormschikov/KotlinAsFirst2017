@@ -226,7 +226,15 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var result = mutableListOf<Int>()
+    var number = n
+    while (number > 0) {
+        result.add(0,number % base)
+        number /= base
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -236,10 +244,17 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
+var numeralSystem = mutableListOf("0","1","2","3","4","5","6","7","8","9","a","b",
+        "c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
+        "u","v","w","x","y","z")
+
 fun convertToString(n: Int, base: Int): String {
-    var number = BigInteger("$n")
-    var convertNumber = number.toString(base)
-    return convertNumber
+    var result = mutableListOf<Any>()
+    val number = convert(n,base)
+    for (i in number) {
+        result.add(numeralSystem[i])
+    }
+    return result.joinToString(separator = "")
 }
 
 /**
@@ -251,17 +266,15 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
-    val mutable = digits.toMutableList<Int>()
-    var i = 0
-    while (mutable.size > 0) {
-            var last = mutable.last()
-            var calculate = last * pow(base.toDouble(), i.toDouble()).toInt()
-            result = result + calculate
-            mutable.remove(mutable.last())
-            i++
-        }
-        return result
+    var list = digits.toMutableList().reversed()
+    var count = 0
+    for (i in list) {
+        var calculate = i * pow(base.toDouble(), count.toDouble()).toInt()
+        result += calculate
+        count++
     }
+    return result
+}
 
 /**
  * Сложная
@@ -273,10 +286,14 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var number = BigInteger("$str", base)
-    var convertNumber = number.toString(10)
-    return convertNumber.toInt()
+    var list = mutableListOf<Int>()
+    for (i in 0 until str.length) {
+    list.add(numeralSystem.indexOf(str[i].toString()))
+    }
+    val result = decimal(list,base)
+    return result
 }
+
 
 /**
  * Сложная
@@ -286,45 +303,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String {
-    val figure = arrayListOf("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX")
-    val dozensOf = arrayListOf("", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC")
-    val hundreds = arrayListOf("", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM")
-    val thousandsOf = arrayListOf("", "M", "MM", "MMM")
-    var list = mutableListOf<Any>()
-    var number = n
-    var count = 0
-    while (number > 0) {
-        number /= 10
-        count++
-    }
-    number = n
-    while (number > 0) {
-            if (count == 1) {
-                list.add(0, figure[number % 10])
-                number -= number
-            }
-            if (count == 2) {
-                list.add(0, figure[number % 10])
-                list.add(0, dozensOf[(number % 100) / 10])
-                number -= number
-            }
-            if (count == 3) {
-                list.add(0, figure[number % 10])
-                list.add(0, dozensOf[(number % 100) / 10])
-                list.add(0, hundreds[(number % 1000) / 100])
-                number -= number
-            }
-            if (count == 4) {
-                list.add(0, figure[number % 10])
-                list.add(0, dozensOf[(number % 100) / 10])
-                list.add(0, hundreds[(number % 1000) / 100])
-                list.add(0, thousandsOf[number / 1000])
-                number -= number
-            }
-        }
-        return list.joinToString(separator = "")
-    }
+fun roman(n: Int): String = TODO()
 
 
  /**
@@ -347,11 +326,7 @@ fun roman(n: Int): String {
          "семь тысяч","восемь тысяч","девять тысяч")
 
 
-fun russian(n: Int): String {
-    val halfResult = (helpForThousands(n) + helpForHundreds(n)).joinToString()
-    val result = Regex("""[\,]""").replace(halfResult, "")
-    return result
-}
+fun russian(n: Int): String = (helpForThousands(n) + helpForHundreds(n)).joinToString().filter { it != ','}
 
 
  fun helpForHundreds(n:Int):MutableList<Any> {
