@@ -2,6 +2,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson3.task1.digitNumber
 import java.lang.Math.*
 import java.math.BigInteger
  /**
@@ -333,102 +334,87 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+ val numeral = arrayListOf("","один","два","три","четыре","пять","шесть","семь",
+         "восемь","девять")
+ val dozens = arrayOf("десять", "одиннадцать", "двенадцать", "тринадцать",
+         "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+ val dozensOf = arrayListOf("","десять","двадцать","тридцать","сорок","пятьдесят",
+         "шестьдесят","семьдесят","восемьдесят","девяносто")
+ val hundreds = arrayListOf("","сто","двести","триста","четыреста","пятьсот",
+         "шестьсот","семьсот","восемьсот","девятьсот")
+ val thousandsOf = arrayListOf("тысяч","одна тысяча","две тысячи","три тысячи",
+         "четыре тысячи","пять тысяч","шесть тысяч",
+         "семь тысяч","восемь тысяч","девять тысяч")
+
+
 fun russian(n: Int): String {
-     val numeral = arrayListOf("","один","два","три","четыре","пять","шесть","семь",
-     "восемь","девять")
-     val dozensOf = arrayListOf("","десять","двадцать","тридцать","сорок","пятьдесят",
-     "шестьдесят","семьдесят","восемьдесят","девяносто")
-     val hundreds = arrayListOf("","сто","двести","триста","четыреста","пятьсот",
-     "шестьсот","семьсот","восемьсот","девятьсот")
-     val thousandsOf = arrayListOf("тысяч","одна тысяча","две тысячи","три тысячи",
-     "четыре тысячи","пять тысяч","шесть тысяч",
-     "семь тысяч","восемь тысяч","девять тысяч")
-     val exception = arrayListOf("","одиннадцать","двенадцать","тринадцать",
-     "четырнадцать","пятнадцать","шестнадцать","семнадцать",
-     "восемнадцать","девятнадцать")
-     val exception2 = arrayListOf("","одиннадцать тысяч","двенадцать тысяч",
-     "тринадцать тысяч","четырнадцать тысяч","пятнадцать тысяч",
-     "шестнадцать тысяч","семнадцать тысяч","восемнадцать тысяч","девятнадцать тысяч")
-     var number = n
-     var count = 0
+    val halfResult = (helpForThousands(n) + helpForHundreds(n)).joinToString()
+    val result = Regex("""[\,]""").replace(halfResult, "")
+    return result
+}
+
+
+ fun helpForHundreds(n:Int):MutableList<Any> {
      var list = mutableListOf<Any>()
-     while (number > 0) {
-         number /= 10
-         count++
+     if (digitNumber(n) == 1) {
+         list.add(numeral[n])
      }
-     number = n
-     while (number > 0) {
-         if (count == 1) {
-             list.add(numeral[number % 10])
-             number -= number
+     if (digitNumber(n) == 2) {
+         if (n in 11..19) {
+             list.add(dozens[n % 10])
+         } else {
+             list.add(dozensOf[n / 10])
+             list.add(numeral[n % 10])
          }
-         if (count == 2) {
-             if (number in 11..19) {
-                 list.add(exception[number % 10])
-             } else {
-                 list.add(numeral[number % 10])
-                 list.add(dozensOf[(number % 100) / 10])
-             }
-                 number -= number
-             }
-             if (count == 3) {
-                 if (number % 100 in 11..19) {
-                     list.add(exception[number % 10])
-                 } else {
-                     list.add(numeral[number % 10])
-                     list.add(dozensOf[(number % 100) / 10])
-                 }
-                 list.add(hundreds[(number % 1000) / 100])
-                 number -= number
-             }
-             if (count == 4) {
-                 if (number % 100 in 11..19) {
-                     list.add(exception[number % 10])
-                 } else {
-                     list.add(numeral[number % 10])
-                     list.add(dozensOf[(number % 100) / 10])
-                 }
-                 list.add(hundreds[(number % 1000) / 100])
-                 list.add(thousandsOf[(number % 10000) / 1000])
-                 number -= number
-             }
-             if (count == 5) {
-                 if (number % 100 in 11..19) {
-                     list.add(exception[number % 10])
-                 } else {
-                     list.add(numeral[number % 10])
-                     list.add(dozensOf[(number % 100) / 10])
-                 }
-                 list.add(hundreds[(number % 1000) / 100])
-                 if (number / 1000 in 11..19) {
-                     list.add(exception2[(number / 1000) % 10])
-                 } else {
-                     list.add(thousandsOf[(number % 10000) / 1000])
-                     list.add(dozensOf[(number % 100000) / 10000])
-                 }
-                 number -= number
-             }
-             if (count == 6) {
-                 if (number % 100 in 11..19) {
-                     list.add(exception[number % 10])
-                 } else {
-                     list.add(numeral[number % 10])
-                     list.add(dozensOf[(number % 100) / 10])
-                 }
-                 list.add(hundreds[(number % 1000) / 100])
-                 if ((number % 100000) / 1000 in 11..19) {
-                     list.add(exception2[(number / 1000) % 10])
-                 } else {
-                     list.add(thousandsOf[(number % 10000) / 1000])
-                     list.add(dozensOf[(number % 100000) / 10000])
-                 }
-                 list.add(hundreds[(number % 1000000) / 100000])
-                 number -= number
-             }
+     }
+     if (digitNumber(n) == 3) {
+         if (n % 100 in 11..19) {
+             list.add(hundreds[n / 100])
+             list.add(dozens[n % 10])
+
+         } else {
+             list.add(hundreds[n / 100])
+             list.add(dozensOf[(n % 100) / 10])
+             list.add(numeral[n % 10])
          }
-     list.reverse()
+     }
      while ("" in list) {
          list.remove("")
      }
-     return list.joinToString(separator = " ")
+     return list
  }
+
+ fun helpForThousands(n:Int):MutableList<Any> {
+     var secondList = mutableListOf<Any>()
+     if (digitNumber(n) == 4) {
+         secondList.add(thousandsOf[n / 1000])
+         secondList.add((helpForHundreds(n % 1000)).joinToString())
+     }
+     if (digitNumber(n) == 5) {
+         if (n / 1000 in 11..19) {
+             secondList.add((helpForHundreds(n / 1000) + thousandsOf[0]).joinToString())
+             secondList.add((helpForHundreds(n % 1000)).joinToString())
+         } else {
+             secondList.add(dozensOf[n / 10000])
+             secondList.add(thousandsOf[(n / 1000) % 10])
+             secondList.add((helpForHundreds(n % 1000)).joinToString())
+         }
+     }
+     if (digitNumber(n) == 6) {
+         secondList.add(hundreds[n / 100000])
+         if ((n / 1000) % 100 in 11..19) {
+             secondList.add((helpForHundreds((n / 1000) % 100) + thousandsOf[0]).joinToString())
+             secondList.add((helpForHundreds(n % 1000)).joinToString())
+         } else {
+             secondList.add(dozensOf[(n / 10000) % 10])
+             secondList.add(thousandsOf[(n / 1000) % 10])
+             secondList.add((helpForHundreds(n % 1000)).joinToString())
+         }
+     }
+     while ("" in secondList) {
+         secondList.remove("")
+     }
+     return secondList
+ }
+
+
