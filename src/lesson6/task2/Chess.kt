@@ -34,14 +34,13 @@ data class Square(val column: Int, val row: Int) {
  */
 val row = " abcdefgh"
 fun square(notation: String): Square {
-    if (notation[0] in row && notation[1] in '1'..'8' && notation.length == 2) {
-        val firsElement = row.indexOf(notation[0])
-        val secondElement = notation[1]
-        return Square(firsElement, "$secondElement".toInt())
-    } else {
-        throw IllegalArgumentException()
-    }
+    if (notation[0] !in row && notation[1] !in '1'..'8' && notation.length != 2) throw IllegalArgumentException()
+    val firsElement = row.indexOf(notation[0])
+    val secondElement = notation[1]
+    return Square(firsElement, "$secondElement".toInt())
 }
+
+
 
 
 /**
