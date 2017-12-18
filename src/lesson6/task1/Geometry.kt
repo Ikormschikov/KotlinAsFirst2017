@@ -3,6 +3,7 @@ package lesson6.task1
 
 import lesson1.task1.sqr
 import lesson2.task2.pointInsideCircle
+import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -14,6 +15,8 @@ data class Point(val x: Double, val y: Double) {
      * Рассчитать (по известной формуле) расстояние между двумя точками
      */
     fun distance(other: Point): Double = Math.sqrt(sqr(x - other.x).toDouble() + sqr(y - other.y))
+
+    fun centerForPoint(other: Point):Double = sqrt(x - other.x).toDouble() + sqrt(y - other.y)
 }
 
 /**
@@ -96,6 +99,8 @@ data class Segment(val begin: Point, val end: Point) {
 
     override fun hashCode() =
             begin.hashCode() + end.hashCode()
+
+    fun length() = begin.distance(end)
 }
 
 /**

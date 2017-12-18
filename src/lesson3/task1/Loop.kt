@@ -233,7 +233,7 @@ fun squareSequenceDigit(n: Int): Int {
 
 fun addToList(a:Int): MutableList<Int> {
     var number = a
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     while (number > 0) {
         list.add(number % 10)
         number /= 10
