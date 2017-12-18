@@ -131,7 +131,7 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int):Boolean {
-    var a: Int = Math.min(m, n)
+    val a = Math.min(m, n)
     for (i in 2..a)
         if ( m % i == 0 && n % i == 0) return false
     return true
@@ -148,13 +148,7 @@ fun isCoPrime(m: Int, n: Int):Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in min(m, n)..max(m, n)) {
-        val square = sqrt(i.toDouble()).toInt()
-        if (square * square == i) return true
-    }
-    return false
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 /**
  * Средняя
  *
