@@ -136,7 +136,7 @@ fun mean(list: List<Double>): Double = when {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val a = mean(list)
-    for (i in 0 until list.size ){
+    for (i in 0 until list.size ) {
         list[i] -= a
     }
     return list
@@ -226,8 +226,8 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var result = mutableListOf<Int>()
     var number = n
+    var result = mutableListOf<Int>()
     if (number == 0) result.add(0)
     while (number > 0) {
         result.add(0,number % base)
@@ -311,83 +311,5 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
- val numeral = arrayListOf("","один","два","три","четыре","пять","шесть","семь",
-         "восемь","девять")
- val dozens = arrayOf("десять", "одиннадцать", "двенадцать", "тринадцать",
-         "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
- val dozensOf = arrayListOf("","десять","двадцать","тридцать","сорок","пятьдесят",
-         "шестьдесят","семьдесят","восемьдесят","девяносто")
- val hundreds = arrayListOf("","сто","двести","триста","четыреста","пятьсот",
-         "шестьсот","семьсот","восемьсот","девятьсот")
- val thousandsOf = arrayListOf("тысяч","одна тысяча","две тысячи","три тысячи",
-         "четыре тысячи","пять тысяч","шесть тысяч",
-         "семь тысяч","восемь тысяч","девять тысяч")
 
-
-fun russian(n: Int): String = (helpForThousands(n) + helpForHundreds(n)).joinToString().filter { it != ','}
-
-
- fun helpForHundreds(n:Int):MutableList<Any> {
-     var list = mutableListOf<Any>()
-     if (digitNumber(n) == 1) {
-         list.add(numeral[n])
-     }
-     if (digitNumber(n) == 2) {
-         if (n in 11..19) {
-             list.add(dozens[n % 10])
-         } else {
-             list.add(dozensOf[n / 10])
-             list.add(numeral[n % 10])
-         }
-     }
-     if (digitNumber(n) == 3) {
-         if (n % 100 in 11..19) {
-             list.add(hundreds[n / 100])
-             list.add(dozens[n % 10])
-
-         } else {
-             list.add(hundreds[n / 100])
-             list.add(dozensOf[(n % 100) / 10])
-             list.add(numeral[n % 10])
-         }
-     }
-     while ("" in list) {
-         list.remove("")
-     }
-     return list
- }
-
- fun helpForThousands(n:Int):MutableList<Any> {
-     var secondList = mutableListOf<Any>()
-     if (digitNumber(n) == 4) {
-         secondList.add(thousandsOf[n / 1000])
-         secondList.add((helpForHundreds(n % 1000)).joinToString())
-     }
-     if (digitNumber(n) == 5) {
-         if (n / 1000 in 11..19) {
-             secondList.add((helpForHundreds(n / 1000) + thousandsOf[0]).joinToString())
-             secondList.add((helpForHundreds(n % 1000)).joinToString())
-         } else {
-             secondList.add(dozensOf[n / 10000])
-             secondList.add(thousandsOf[(n / 1000) % 10])
-             secondList.add((helpForHundreds(n % 1000)).joinToString())
-         }
-     }
-     if (digitNumber(n) == 6) {
-         secondList.add(hundreds[n / 100000])
-         if ((n / 1000) % 100 in 11..19) {
-             secondList.add((helpForHundreds((n / 1000) % 100) + thousandsOf[0]).joinToString())
-             secondList.add((helpForHundreds(n % 1000)).joinToString())
-         } else {
-             secondList.add(dozensOf[(n / 10000) % 10])
-             secondList.add(thousandsOf[(n / 1000) % 10])
-             secondList.add((helpForHundreds(n % 1000)).joinToString())
-         }
-     }
-     while ("" in secondList) {
-         secondList.remove("")
-     }
-     return secondList
- }
-
-
+fun russian(n: Int): String = TODO()
