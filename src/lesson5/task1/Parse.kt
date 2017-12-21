@@ -161,7 +161,7 @@ fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     try {
         var result = expression[0].toString().toInt()
-        for (i in 1 until parts.size step 2) {
+        for (i in 1 until parts.size) {
             val firstElement = parts[i]
             if (firstElement == "+") {
                 result += parts[i + 1].toInt()
