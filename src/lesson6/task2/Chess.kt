@@ -142,8 +142,9 @@ fun bishopMoveNumber(start: Square, end: Square): Int = when {
  */
 fun bishopTrajectory(start: Square, end: Square): List<Square> = when {
     bishopMoveNumber(start,end) == 0 -> listOf(start)
-    bishopMoveNumber(start,end) == 2 -> listOf(start, helpForBishop(start,end),end)
-    else -> listOf(start,end)
+    bishopMoveNumber(start, end) == 1 -> listOf(start,end)
+    bishopMoveNumber(start, end) == -1 -> listOf()
+    else -> listOf(start, helpForBishop(start,end),end)
 }
 
 fun helpForBishop(start: Square,end: Square):Square {
