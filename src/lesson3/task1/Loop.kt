@@ -224,22 +224,19 @@ fun squareSequenceDigit(n: Int): Int {
         result = sqr(i.toDouble()).toInt()
         count += digitNumber(result)
     }
-    if (count - n != 0) {
-        val list = addToList(result)
-        return list[count - n]
-    }
+    if (count - n != 0) return findNumber(count,n,result)
     return result % 10
 }
 
-fun addToList(a:Int): MutableList<Int> {
-    var number = a
-    val list = mutableListOf<Int>()
-    while (number > 0) {
-        list.add(number % 10)
+fun findNumber(a:Int,b:Int,c:Int): Int {
+    var number = c
+    val difference = a - b
+    for (i in 1..difference)
         number /= 10
-    }
-    return list
+    return number % 10
 }
+
+
 /**
  * Сложная
  *
@@ -256,9 +253,6 @@ fun fibSequenceDigit(n: Int): Int {
         count += digitNumber(fib(i))
     }
     result += fib(i)
-    if (count - n != 0) {
-        val list = addToList(result)
-        return list[count - n]
-    }
+    if (count - n != 0) return findNumber(count,n,result)
     return result % 10
 }

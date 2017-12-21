@@ -140,18 +140,19 @@ fun bishopMoveNumber(start: Square, end: Square): Int = when {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
-/*when {
+fun bishopTrajectory(start: Square, end: Square): List<Square> = when {
     bishopMoveNumber(start,end) == 0 -> listOf(start)
     bishopMoveNumber(start,end) == 2 -> listOf(start, helpForBishop(start,end),end)
     else -> listOf(start,end)
 }
 
 fun helpForBishop(start: Square,end: Square):Square {
-    val forColumn = min(start.column,end.column) + sqrt(max(start.column.toDouble(),end.column.toDouble()))
-    val forRow = min(start.row,end.row) + sqrt(max(start.row.toDouble(),end.row.toDouble()))
-    return Square(forColumn.toInt(),forRow.toInt())
-}*/
+    for (column in 1..8)
+        for (row in 1..8)
+            if (abs(start.column - column) == abs(start.row - row) && abs(end.column - column) == abs(end.row - row))
+                return Square(column,row)
+    return start
+}
 
 /**
  * Средняя
@@ -194,7 +195,6 @@ fun kingMoveNumber(start: Square, end: Square): Int = when {
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
-
 /**
  * Сложная
  *

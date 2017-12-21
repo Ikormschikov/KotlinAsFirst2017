@@ -136,7 +136,6 @@ fun mean(list: List<Double>): Double = when {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val a = mean(list)
-    if (list.isEmpty()) return list
     for (i in 0 until list.size ){
         list[i] -= a
     }
@@ -161,9 +160,11 @@ fun times(a: List<Double>, b: List<Double>): Double = TODO()
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
+    var degreeOfNumber = 1.0
     var result = 0.0
     for (i in 0 until p.size) {
-        result += p[i] * pow(x, i.toDouble())
+        result += p[i] * degreeOfNumber
+        degreeOfNumber *= x
     }
     return result
 }
@@ -179,10 +180,8 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    var a = 0.0
     for (i in 1 until list.size) {
         list[i] += list[i - 1]
-
     }
     return list
 }
@@ -245,12 +244,12 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-var numeralSystem = mutableListOf("0","1","2","3","4","5","6","7","8","9","a","b",
+ val numeralSystem = arrayListOf("0","1","2","3","4","5","6","7","8","9","a","b",
         "c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
         "u","v","w","x","y","z")
 
 fun convertToString(n: Int, base: Int): String {
-    var result = mutableListOf<Any>()
+    val result = mutableListOf<String>()
     val number = convert(n,base)
     for (i in number) {
         result.add(numeralSystem[i])
@@ -289,11 +288,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun decimalFromString(str: String, base: Int): Int {
     var list = mutableListOf<Int>()
     for (i in 0 until str.length) {
-    list.add(numeralSystem.indexOf(str[i].toString()))
+        list.add(numeralSystem.indexOf(str[i].toString()))
     }
     return decimal(list,base)
 }
-
 
 /**
  * Сложная
