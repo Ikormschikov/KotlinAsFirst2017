@@ -71,16 +71,17 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011
  * При неверном формате входной строки вернуть пустую строку
  */
+val arrayOfMonths = arrayOf("", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+        "сентября", "октября", "ноября", "декабря")
+
 fun dateStrToDigit(str: String): String {
-    val arrayOfMonth = arrayOf("", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря")
     val parts = str.split(" ")
+    if (parts.size != 3) return ""
     try {
-        if (parts.size != 3) return ""
         val day = parts[0].toInt()
-        val month = arrayOfMonth.indexOf(parts[1]).toInt()
+        val month = arrayOfMonths.indexOf(parts[1])
         val year = parts[2].toInt()
-        if (parts[1] in arrayOfMonth) return String.format("%02d.%02d.%d", day, month, year) else return ""
+        if (parts[1] in arrayOfMonths) return String.format("%02d.%02d.%d", day, month, year) else return ""
     }
     catch (e: NumberFormatException) {
         return ""
@@ -95,16 +96,14 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val arrayOfMonth = arrayOf("", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря")
     val parts = digital.split(".")
+    if ("00" in parts) return ""
+    if (parts.size != 3) return ""
     try {
-        if ("00" in parts) return ""
-        if (parts.size != 3) return ""
         val day = parts[0].toInt()
-        val month = arrayOfMonth.elementAt(parts[1].toInt())
+        val month = arrayOfMonths[parts[1].toInt()]
         val year = parts[2].toInt()
-        if (month in arrayOfMonth) return String.format("%d %s %d", day, month, year) else return ""
+        if (month in arrayOfMonths) return String.format("%d %s %d", day, month, year) else return ""
     }
     catch (e: NumberFormatException) {
         return ""
@@ -123,19 +122,7 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
-    var string = ""
-    val verify = Regex("""[\+\-\(\)\s]""").replace(phone, "")
-    if (verify.contains(Regex("""\D"""))) return ""
-    if (phone.contains(Regex("""\+$"""))) return ""
-    val parts = Regex("""[\-\(\)\s]""").replace(phone, " ").split(" ")
-    for (part in parts) {
-        if (part.contains(Regex("""(\+[0-9]*)""")) || part.contains(Regex("""([0-9]*)"""))) {
-            string += part
-        } else continue
-    }
-    return string
-}
+fun flattenPhoneNumber(phone: String): String = TODO()
 
 /**
  * Средняя
@@ -147,19 +134,7 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int {
-    val numbers = Regex("""[\%\-\s]""").replace(jumps, "")
-    if (numbers.contains(Regex("""\D"""))) return -1
-    if (numbers.isEmpty()) return  -1
-    var numbers1 = numbers.toLong()
-    var listOfNumbers = mutableListOf<Long>()
-    while (numbers1 > 0) {
-        listOfNumbers.add(0, (numbers1 % 1000))
-        numbers1 /= 1000
-    }
-    val maximum = listOfNumbers.max()
-    return maximum!!.toInt()
-}
+fun bestLongJump(jumps: String): Int = TODO()
 
 /**
  * Сложная
@@ -171,24 +146,7 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int {
-    var max = "0"
-    val verify = Regex("""[\+\%\-\s]""").replace(jumps, "")
-    if (verify.contains(Regex("""\D"""))) return -1
-    var string = Regex("""[\%\-]""").replace(jumps, "")
-    string = Regex("""(\s)\+""").replace(string, "+")
-    val parts = string.split(" ")
-    for (part in parts) {
-        if (part.contains(Regex("""([0-9]*\+)"""))) {
-            val result = Regex("""[\+]""").replace(part, "")
-            if (result.toLong() > max.toLong()) {
-                max = result
-            }
-        }
-    }
-    if (max.toInt() != 0) return max.toInt() else return -1
-}
-
+fun bestHighJump(jumps: String): Int = TODO()
 
 /**
  * Сложная
@@ -201,26 +159,24 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
-    var result = 0
     try {
-        var halfResult = parts[0].toInt()
-        for (i in 1 until parts.size) {
+        var result = expression[0].toString().toInt()
+        for (i in 1 until parts.size step 2) {
             val firstElement = parts[i]
             if (firstElement == "+") {
-                halfResult += parts[i + 1].toInt()
+                result += parts[i + 1].toInt()
             }
             if (firstElement == "-") {
-                halfResult -= parts[i + 1].toInt()
+                result -= parts[i + 1].toInt()
             }
             if (firstElement.contains(Regex("""([0-9]*)"""))) {
                 continue
             }
         }
-        result = halfResult
-    } catch (e: IllegalArgumentException) {
+        return result
+    } catch (e: NumberFormatException) {
         throw IllegalArgumentException()
     }
-    return result
 }
 
 
@@ -235,19 +191,11 @@ fun plusMinus(expression: String): Int {
  */
 fun firstDuplicateIndex(str: String): Int {
     val parts = str.toLowerCase().split(" ")
-    if (parts.size == 1) return -1
-    var result = 0
-    for (i in 0 until parts.size - 1) {
-        var resultt = parts[i]
-        if (Regex("""(\$resultt+)\s\1""").find(str, result) != null) {
-            result
-        } else {
-            result += resultt.length + 1
-        }
-    }
-    return result
+    var indexOfChar = 0
+    for (part in 0 until parts.size - 1)
+        if (parts[part] != parts[part + 1]) indexOfChar += 1 + parts[part].length else return indexOfChar
+    return -1
 }
-
 
 
 
@@ -262,27 +210,7 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String {
-    var name = mutableListOf<String>("")
-    var cost = mutableListOf<Double>(0.0)
-    var max = 0.0
-    if (description.isNotEmpty()) {
-        val verify = Regex("""[[а-яА-Я]\s\.\;]""").replace(description, "")
-        if (verify.contains(Regex("""\D"""))) return ""
-        val parts = description.split("; ")
-        for (part in parts) {
-            val secondPart = part.split(" ")
-            if (secondPart[1].toDouble() > max) {
-                name.remove(name.last())
-                cost.remove(cost.last())
-                name.add(0, secondPart[0])
-                cost.add(0, secondPart[1].toDouble())
-                max = secondPart[1].toDouble()
-            }
-        }
-    }
-    return name.joinToString()
-}
+fun mostExpensive(description: String): String  = TODO()
 
 /**
  * Сложная
