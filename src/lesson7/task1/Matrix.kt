@@ -63,7 +63,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
     override fun get(cell: Cell): E  = map[cell] ?: throw IllegalArgumentException()
 
     override fun set(row: Int, column: Int, value: E) {
-        map[Cell(row, column)] = value
+        map[Cell(row, column)] = value ?: throw IllegalArgumentException()
     }
 
     override fun set(cell: Cell, value: E) {
