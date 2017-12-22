@@ -27,7 +27,7 @@ data class Square(val column: Int, val row: Int) {
     fun notation(): String = if (this.inside()) ('a' - 1 + column) + "$row" else ""
 }
 
-fun helpForException(start: Square,end: Square): Boolean = !start.inside() || !end.inside()
+fun throwException(start: Square,end: Square): Boolean = !start.inside() || !end.inside()
 /**
  * Простая
  *
@@ -35,9 +35,8 @@ fun helpForException(start: Square,end: Square): Boolean = !start.inside() || !e
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-val row = " abcdefgh"
 fun square(notation: String): Square {
-    if (notation.length != 2 || notation[0] !in row || notation[1] !in '1'..'8') throw IllegalArgumentException()
+    if (notation.length != 2 || notation[0] !in 'a'..'h' || notation[1] !in '1'..'8') throw IllegalArgumentException()
     return Square(notation[0] - 'a' + 1,notation[1] - '0')
 }
 
@@ -65,7 +64,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int = when {
-    helpForException(start, end) -> throw IllegalArgumentException()
+    throwException(start, end) -> throw IllegalArgumentException()
     start == end -> 0
     start.column == end.column || start.row == end.row -> 1
     else -> 2
@@ -115,7 +114,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> = when {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int = when {
-    helpForException(start,end) -> throw IllegalArgumentException()
+    throwException(start,end) -> throw IllegalArgumentException()
     start == end -> 0
     abs(start.column - end.column) % 2 != abs(start.row - end.row) % 2 -> -1
     abs(start.column - end.column) == abs(start.row - end.row) -> 1
@@ -148,11 +147,12 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = when {
 }
 
 fun helpForBishop(start: Square,end: Square):Square {
-    for (column in 1..8)
-        for (row in 1..8)
-            if (abs(start.column - column) == abs(start.row - row) && abs(end.column - column) == abs(end.row - row))
-                return Square(column,row)
-    return start
+    val column = (start.column - start.row + end.column + end.row) / 2
+    val row = (start.row - start.column + end.column + end.row) / 2
+    return when {
+        row in 1..8 && column in 1..8 -> Square(column, row)
+        else -> Square(end.column - row + start.row, end.row - row + start.row)
+    }
 }
 
 /**
@@ -176,7 +176,7 @@ fun helpForBishop(start: Square,end: Square):Square {
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 fun kingMoveNumber(start: Square, end: Square): Int = when {
-    helpForException(start,end) -> throw IllegalArgumentException()
+    throwException(start,end) -> throw IllegalArgumentException()
     start == end -> 0
     else -> max(abs(end.column - start.column), abs(end.row - start.row))
 }
